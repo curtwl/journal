@@ -59,7 +59,7 @@ a:link {
   padding: 0.7rem;
   background-color: rgb(0, 123, 255);
   color: whitesmoke;
-  font-size: 16px;
+  font-size: 1.1vw;
   border: none;
 }
 
@@ -97,5 +97,5 @@ a:link {
   /* visibility: visible; */
   display: block;
   background-color: rgb(211, 211, 211);
-  width: 100%;
+  width: 20%;
 }
