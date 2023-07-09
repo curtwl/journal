@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 const baseURL = '/api/entries'
 
 const getAllEntries = () => {
@@ -17,8 +18,8 @@ const updateEntry = (id, updatedEntry) => {
 }
 
 const deleteEntry = id => {
-    const request = axios.delete(`${baseURL}/${id}`)
-    return request
+  const request = axios.delete(`${baseURL}/${id}`)
+  return request
 }
 
 export default { baseURL, getAllEntries, createEntry, updateEntry, deleteEntry }
