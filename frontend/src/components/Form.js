@@ -1,5 +1,4 @@
 const Form = ({addEntry, postTitle, postBody, setPostTitle, setPostBody}) => {
-  console.log(addEntry)
   return (
     <form className='form' onSubmit={addEntry}>
       <label htmlFor="post-title">Title:</label>

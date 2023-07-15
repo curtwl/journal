@@ -7,7 +7,6 @@ import entriesService from './services/entriesService'
 //(<Route path="/edit/:id" element={<Edit />})
 
 const App = () => {
-  // const journalEntries = new Array(5).fill(0)
   const [journalEntries, setJournalEntries] = useState([])
   const [postTitle, setPostTitle] = useState('')
   const [postBody, setPostBody] = useState('')
@@ -69,7 +68,7 @@ const App = () => {
         editEntryHandler={editEntryHandler}
         deleteEntryHandler={deleteEntryHandler} />
     </div>
-  );
+  )
 }
 
 export default App
