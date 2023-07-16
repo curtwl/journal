@@ -2,7 +2,7 @@ body {
   padding: 2rem;
 }
 
-.header-container, .header, .login {
+.header-container, .header-main, .login {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -20,7 +20,16 @@ a:link {
   color: rgb(0, 123, 255);
 }
 
-.header > h2 {
+.header-link {
+  text-decoration: none;
+  color: black;
+}
+
+.header-link:hover{
+  text-decoration: underline;
+}
+
+.header-main > h2 {
   color: gray;
 }
 
@@ -55,6 +64,11 @@ a:link {
   font-size: 12px;
   font-weight: 600;
   color: gray;
+}
+
+.signup-form {
+  display: grid;
+  max-width: 25%;
 }
 
 .posts-container {
