@@ -2,6 +2,10 @@ import axios from 'axios'
 
 const baseURL = '/api/entries'
 
+const setToken = newToken => {
+  token = `Bearer ${newToken}`
+}
+
 const getAllEntries = async () => {
   const response = await axios.get(baseURL)
   return response.data
@@ -22,4 +26,4 @@ const deleteEntry = async (id) => {
   return response.data
 }
 
-export default { baseURL, getAllEntries, createEntry, updateEntry, deleteEntry }
+export default { baseURL, getAllEntries, createEntry, updateEntry, deleteEntry, setToken }
