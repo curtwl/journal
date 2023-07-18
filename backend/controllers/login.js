@@ -3,6 +3,14 @@ const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 
+const getToken = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.startsWith('Bearer ')) {
+      return authorization.split(' ')[1]
+    }
+    return null
+  }
+
 loginRouter.post('/', async (request, response) => {
   const { username, password } = request.body
 
@@ -30,7 +38,8 @@ loginRouter.post('/', async (request, response) => {
 
   response
     .status(200)
-    .send({ token, username: user.username, name: user.name })
+    .cookie("userCookie", token, )//{ httpOnly: true })
+    .send({ token, username: user.username, name: user.name, })
 })
 
 module.exports = loginRouter

@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/entries HTTP/1.1
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWQiOiI2NGIzN2M1NWFjYmMwNWRjMDkzZWE5OGIiLCJpYXQiOjE2ODk2NTY1MzgsImV4cCI6MTY4OTY2MDEzOH0.sgmhfD2kIzO8SAdRra_xeGw8gjkF-bmrQfWPOE-_Zk4
+
+{
+    "title": "ttttt",
+    "content": "Easyjj",
+    "author": "John"
+}

@@ -2,16 +2,17 @@ import React from "react"
 import { useState, useContext } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
 import loginService from '../services/loginService'
+import entriesService from '../services/entriesService'
 import { LoginContext } from "../components/LoginWrapper"
 
 export default function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    //const [loggedIn, setLoggedIn] = useState(false)
+    //const [loggedInUser, setLoggedInUser] = useState('')
 
     const loginContext = useContext(LoginContext)
     console.log(loginContext)
-    
+
     const loginUser = async (event) => {
         console.log(username)
         event.preventDefault()
@@ -24,8 +25,10 @@ export default function Login() {
     
         try {
             const user = await loginService.login(userObject)
-            loginContext.setLoggedIn(true)
+            entriesService.setToken(user.token)
+            loginContext.setLoggedInUser(user.username)
             console.log(user)
+            console.log(document.cookie, 'cookie')
           } catch (error) {
             console.error(error)
           }
@@ -44,7 +47,8 @@ export default function Login() {
             
             <label htmlFor="password">Password:</label>
             <input id="password" value={password} onChange={({ target }) => setPassword(target.value)} />
-            <p>{ loginContext?.loggedIn ? 'Logged in!' : 'Login to create journals!'}</p>
+            <p>{ loginContext?.loggedInUser ? `Logged in! Welcome ${loginContext.loggedInUser}`
+              : 'Login to create journals!'}</p>
             <button type='submit'>Submit</button>
         </form>
     )

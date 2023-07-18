@@ -12,7 +12,7 @@ const getToken = request => {
 }
 
 entriesRouter.get('/', async (request, response) => { 
-  const entries = await Entry.find({})
+  const entries = await Entry.find({}).populate('author')
   response.json(entries)
 })
 
@@ -29,28 +29,34 @@ entriesRouter.get('/:id', async (request, response) => {
 
 entriesRouter.post('/', async (request, response) => {
   const body = request.body
-
-  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  console.log(request)
+  const decodedToken = jwt.verify(getToken(request), process.env.SECRET)
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }
 
   const user = await User.findById(decodedToken.id)
+  console.log(user)
 
   const entry = new Entry({
     title: body.title,
     content: body.content,
-    user: user.id
+    author: user.id
   })
 
   savedEntry = await entry.save()
   user.entries = user.entries.concat(savedEntry._id)
   await user.save()
+  //res.cookie("session_token", decodedToken, { expires: 60*60 })
   response.status(201).json(savedEntry)
 })
 
 entriesRouter.delete('/:id', (request, response, next) => {
-    Entry.findByIdAndRemove(request.params.id)
+  const decodedToken = jwt.verify(getToken(request), process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+  Entry.findByIdAndRemove(request.params.id)
     .then(() => {
       response.status(204).end()
     })

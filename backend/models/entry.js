@@ -7,6 +7,10 @@ const entrySchema = new mongoose.Schema({
     required: true,
     minlength: 1
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 entrySchema.set('toJSON', {

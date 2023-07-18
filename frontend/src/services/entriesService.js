@@ -1,9 +1,11 @@
 import axios from 'axios'
 
 const baseURL = '/api/entries'
+let token = null
 
-const setToken = newToken => {
+const setToken = (newToken) => {
   token = `Bearer ${newToken}`
+  console.log(token)
 }
 
 const getAllEntries = async () => {
@@ -12,7 +14,12 @@ const getAllEntries = async () => {
 }
 
 const createEntry = async (newEntry) => {
-  const response = await axios.post(baseURL, newEntry)
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.post(baseURL, newEntry, config)
+  console.log(response)
   return response.data
 }
 
@@ -22,7 +29,10 @@ const updateEntry = async (id, updatedEntry) => {
 }
 
 const deleteEntry = async (id) => {
-  const response = await axios.delete(`${baseURL}/${id}`)
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.delete(`${baseURL}/${id}`, config)
   return response.data
 }
 

@@ -13,8 +13,17 @@ const loginContext = useContext(LoginContext)
       <h2>&nbsp;| Create A Note</h2>
     </div>
     <div className='login'>
-      <Link to="/login">{ loginContext?.loggedIn ? 'Logout' : 'Log In' } </Link>
-      <Link to="/signup">{ loginContext?.loggedIn ? '' : 'Sign Up' }</Link>
+      {loginContext?.loggedInUser ? 
+        <button id="logout-btn" onClick={() => loginContext.setLoggedInUser(null)}>Logout</button>
+      :
+        <Link to="/login">
+          { loginContext?.loggedInUser ? 'Logout' : 'Log In' } 
+        </Link>
+      }
+
+      <Link to={loginContext?.loggedInUser ? "/account" : "/signup"}>
+        { loginContext?.loggedInUser ? loginContext.loggedInUser : 'Sign Up' }
+      </Link>
     </div>
   </div>
 )}
