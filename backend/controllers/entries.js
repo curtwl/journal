@@ -3,14 +3,6 @@ const Entry = require('../models/entry')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-const getToken = request => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.startsWith('Bearer ')) {
-    return authorization.split(' ')[1]
-  }
-  return null
-}
-
 entriesRouter.get('/', async (request, response) => { 
   const entries = await Entry.find({}).populate('author')
   response.json(entries)
@@ -29,8 +21,9 @@ entriesRouter.get('/:id', async (request, response) => {
 
 entriesRouter.post('/', async (request, response) => {
   const body = request.body
-  console.log(request)
-  const decodedToken = jwt.verify(getToken(request), process.env.SECRET)
+  const token = request.cookies.userCookie;
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }
@@ -52,7 +45,10 @@ entriesRouter.post('/', async (request, response) => {
 })
 
 entriesRouter.delete('/:id', (request, response, next) => {
-  const decodedToken = jwt.verify(getToken(request), process.env.SECRET)
+  const token = request.cookies.userCookie;
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  console.log(decodedToken)
+
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }

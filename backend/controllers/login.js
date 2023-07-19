@@ -38,8 +38,10 @@ loginRouter.post('/', async (request, response) => {
 
   response
     .status(200)
-    .cookie("userCookie", token, )//{ httpOnly: true })
-    .send({ token, username: user.username, name: user.name, })
+    // .redirect("/")
+    .cookie("userCookie", token, { httpOnly: true })
+    .send({ token, username: user.username, })
+    
 })
 
 module.exports = loginRouter

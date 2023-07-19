@@ -28,7 +28,7 @@ export default function Login() {
             entriesService.setToken(user.token)
             loginContext.setLoggedInUser(user.username)
             console.log(user)
-            console.log(document.cookie, 'cookie')
+            // console.log(document.cookie, 'cookie')
           } catch (error) {
             console.error(error)
           }

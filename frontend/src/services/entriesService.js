@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const baseURL = '/api/entries'
 let token = null
@@ -14,8 +15,11 @@ const getAllEntries = async () => {
 }
 
 const createEntry = async (newEntry) => {
+  const userCookie = Cookies.get('userCookie')
+
   const config = {
     headers: { Authorization: token },
+    'userCookie': userCookie
   }
 
   const response = await axios.post(baseURL, newEntry, config)
