@@ -1,9 +1,11 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import entriesService from '../services/entriesService'
 import Form from '../components/Form'
 import Posts from '../components/Posts'
+import { LoginContext } from "../components/LoginWrapper"
+import loginService from '../services/loginService'
 
 export default function Home() {
     const [journalEntries, setJournalEntries] = useState([])
@@ -11,7 +13,25 @@ export default function Home() {
     const [postBody, setPostBody] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [entryToEdit, setEntryToEdit] = useState(null)
+
+    const loginContext = useContext(LoginContext)
+    console.log(loginContext)
   
+    // if user has a cookie, log them in on first render
+    useEffect(() => {
+        async function loginWithCookie() {
+            try {
+                const user = await loginService.login()
+                entriesService.setToken(user.token)
+                loginContext.setLoggedInUser(user.username)
+                console.log(user)
+              } catch (error) {
+                console.error(error)
+              }   
+        }
+        loginWithCookie()
+    }, [])
+
     useEffect(() => {
       entriesService
         .getAllEntries()
@@ -37,9 +57,6 @@ export default function Home() {
       } catch (error) {
         console.error(error)
       }
-    //   entriesService
-    //     .createEntry(newEntry)
-    //     .then((res) => setJournalEntries(journalEntries.concat(res)))
   
       setPostTitle('')
       setPostBody('')

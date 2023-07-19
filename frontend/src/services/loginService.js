@@ -1,8 +1,9 @@
 import axios from 'axios'
 const baseUrl = '/api/login'
 
-const login = async (userObject) => {
+const login = async (userObject=null) => {
   console.log(userObject, 'userObject')
+  //console.log(userCookie, 'loginService cookie') <-- undef because httpOnly=true
   const response = await axios.post(baseUrl, userObject)
   console.log(response.data, 'response.data')
   console.log(response, 'response')

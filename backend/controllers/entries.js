@@ -21,11 +21,12 @@ entriesRouter.get('/:id', async (request, response) => {
 
 entriesRouter.post('/', async (request, response) => {
   const body = request.body
-  const token = request.cookies.userCookie;
+  const token = request.cookies.userCookie
+  console.log(token)
   const decodedToken = jwt.verify(token, process.env.SECRET)
 
   if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
+    return response.status(401).json({ error: 'Invalid token' })
   }
 
   const user = await User.findById(decodedToken.id)

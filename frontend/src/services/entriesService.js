@@ -10,15 +10,40 @@ const setToken = (newToken) => {
 }
 
 const getAllEntries = async () => {
-  const response = await axios.get(baseURL)
-  return response.data
+  try {
+    const userCookie = Cookies.get('userCookie')
+
+    const config = {
+      headers: { 'userCookie': userCookie }
+    }
+    
+    const response = await axios.post('/api/login', config)
+    const response2 = await axios.get(baseURL)
+    
+    return response.data, response2.data
+  }
+  catch (error) {
+    if (error.response) {
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+    } else if (error.request) {
+      console.log(error.request)
+    } else {
+      console.log('Error', error.message)
+    }
+    const response = await axios.get(baseURL)
+    console.log(response, 'r1')
+    return response.data
+  }
+  
 }
 
 const createEntry = async (newEntry) => {
   const userCookie = Cookies.get('userCookie')
+  console.log(userCookie,'ttt')
 
   const config = {
-    headers: { Authorization: token },
     'userCookie': userCookie
   }
 
