@@ -1,16 +1,24 @@
 import React from "react"
 import { useContext } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { LoginContext } from "../components/LoginWrapper"
 
-// change h2 to ${current route}
-const Header = (props) => {
+const Header = () => {
   const loginContext = useContext(LoginContext)
+  const { pathname } = useLocation()
+  
+  const pathsForJSX = {
+    '/': 'Create A Note',
+    '/login': 'Login',
+    '/signup': 'Signup',
+    '/account': 'Account'
+  }
+
   return (
     <div className='header-container'>
       <div className='header-main'>
         <h1><Link to="/" className="header-link">Digital Journal</Link></h1>
-        <h2>&nbsp;| Create A Note</h2>
+        <h2>&nbsp;| {pathsForJSX[pathname]}</h2>
       </div>
       <div className='login'>
         {loginContext?.loggedInUser ? 
