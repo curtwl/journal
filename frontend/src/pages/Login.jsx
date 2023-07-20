@@ -25,8 +25,10 @@ export default function Login() {
     
         try {
             const user = await loginService.login(userObject)
-            entriesService.setToken(user.token)
-            loginContext.setLoggedInUser( {username: user.username, id: user.id} )
+            if (user) {
+              entriesService.setToken(user.token)
+              loginContext.setLoggedInUser( {username: user.username, id: user.id} )
+          }
             console.log(user)
             // console.log(document.cookie, 'cookie')
           } catch (error) {
