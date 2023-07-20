@@ -33,7 +33,6 @@ const getAllEntries = async () => {
       console.log('Error', error.message)
     }
     const response = await axios.get(baseURL)
-    console.log(response, 'r1')
     return response.data
   }
   
@@ -41,7 +40,6 @@ const getAllEntries = async () => {
 
 const createEntry = async (newEntry) => {
   const userCookie = Cookies.get('userCookie')
-  console.log(userCookie,'ttt')
 
   const config = {
     'userCookie': userCookie

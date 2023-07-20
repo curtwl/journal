@@ -26,7 +26,7 @@ export default function Login() {
         try {
             const user = await loginService.login(userObject)
             entriesService.setToken(user.token)
-            loginContext.setLoggedInUser(user.username)
+            loginContext.setLoggedInUser( {username: user.username, id: user.id} )
             console.log(user)
             // console.log(document.cookie, 'cookie')
           } catch (error) {
@@ -47,7 +47,7 @@ export default function Login() {
             
             <label htmlFor="password">Password:</label>
             <input id="password" value={password} onChange={({ target }) => setPassword(target.value)} />
-            <p>{ loginContext?.loggedInUser ? `Logged in! Welcome ${loginContext.loggedInUser}`
+            <p>{ loginContext?.loggedInUser ? `Logged in! Welcome ${loginContext.loggedInUser.username}`
               : 'Login to create journals!'}</p>
             <button type='submit'>Submit</button>
         </form>

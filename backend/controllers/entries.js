@@ -4,8 +4,16 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 entriesRouter.get('/', async (request, response) => { 
-  const entries = await Entry.find({}).populate('author')
-  response.json(entries)
+  try {
+    const token = request.cookies.userCookie
+    console.log(token)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    const entries = await Entry.find({author: decodedToken.id})//.populate('author')
+    response.json(entries)
+  } catch {
+    const entries = await Entry.find({})//.populate('author')
+    response.json(entries)
+  }
 })
 
 // doesn't work in browser, works in Postman...
@@ -45,19 +53,28 @@ entriesRouter.post('/', async (request, response) => {
   response.status(201).json(savedEntry)
 })
 
-entriesRouter.delete('/:id', (request, response, next) => {
-  const token = request.cookies.userCookie;
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  console.log(decodedToken)
+entriesRouter.delete('/:id', async (request, response, next) => {
+  try {
+    const token = request.cookies.userCookie;
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    console.log(decodedToken)
 
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
-  Entry.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end()
-    })
-    .catch(error => next(error))
+    if (!decodedToken.id) {
+      return response.status(401).json({ error: 'Invalid token' })
+    }
+
+    const deletedUser = await User.remove({ _id :request.params.id })
+
+    return { success: true, message: 'Your account has been successfully deleted' }
+    // Entry.findByIdAndRemove(request.params.id)
+    //   .then(() => {
+    //     response.status(204).end()
+    //   })
+    //   .catch(error => next(error))
+} catch {
+    console.error('Error: ', error);
+    return { success: false, message: 'Could not delete account' }
+}
 })
 
 entriesRouter.put('/:id', (request, response, next) => {

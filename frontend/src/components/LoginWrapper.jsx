@@ -3,7 +3,7 @@ import { useState, createContext } from 'react'
 
 export const LoginContext = createContext(null)
 export default function LoginWrapper({children}) {
-    const [loggedInUser, setLoggedInUser] = useState(false)
+    const [loggedInUser, setLoggedInUser] = useState({ username: '', id: '' })
 
     let value = { loggedInUser, setLoggedInUser }
 

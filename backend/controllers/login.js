@@ -43,7 +43,7 @@ loginRouter.post('/', async (request, response) => {
         if (decodedToken.id) {        
           response
             .status(200)
-            .send({ tokenFromCookie, username: decodedToken.username, })
+            .send({ tokenFromCookie, username: decodedToken.username, id: decodedToken.id })
         } else {
           response.status(401).json({ error: 'Invalid token' })
         }

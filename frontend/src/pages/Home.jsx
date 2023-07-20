@@ -23,7 +23,7 @@ export default function Home() {
             try {
                 const user = await loginService.login()
                 entriesService.setToken(user.token)
-                loginContext.setLoggedInUser(user.username)
+                loginContext.setLoggedInUser({ username: user.username, id: user.id })
                 console.log(user)
               } catch (error) {
                 console.error(error)
