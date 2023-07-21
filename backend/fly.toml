@@ -7,7 +7,7 @@ app = "chingu-journal"
 primary_region = "bos"
 
 [env]
-  PORT = "8080" # add this
+  PORT = "8080" #
 
 [experimental]
   auto_rollback = true
