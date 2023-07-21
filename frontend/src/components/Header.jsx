@@ -22,7 +22,7 @@ const Header = () => {
       </div>
       <div className='login'>
         {loginContext?.loggedInUser ? 
-          <button id="logout-btn" onClick={() => loginContext.setLoggedInUser('')}>Logout</button>
+          <button id="logout-btn" onClick={() => loginContext.setLoggedInUser(null)}>Logout</button>
         :
           <Link to="/login">
             { loginContext?.loggedInUser ? 'Logout' : 'Log In' } 

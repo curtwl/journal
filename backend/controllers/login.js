@@ -37,21 +37,20 @@ loginRouter.post('/', async (request, response) => {
   const tokenFromCookie = request.cookies.userCookie
   console.log(tokenFromCookie)
   
-  if (tokenFromCookie) {
-    try {
+  if (request.body.password)
+    loginWithPassword(request, response)
+  else if (tokenFromCookie) {
         const decodedToken = jwt.verify(tokenFromCookie, process.env.SECRET)
-        if (decodedToken.id) {        
+        const user = await User.findById(decodedToken.id) 
+        if (user) {
           response
             .status(200)
             .send({ tokenFromCookie, username: decodedToken.username, id: decodedToken.id })
         } else {
           response.status(401).json({ error: 'Invalid token' })
         }
-    } catch {
-        loginWithPassword(request, response)
-    }
   } else 
-    loginWithPassword(request, response)
+  console.log('no password or cookie')
 })
 
 module.exports = loginRouter

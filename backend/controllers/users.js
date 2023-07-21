@@ -24,19 +24,17 @@ usersRouter.post('/', async (request, response) => {
   response.status(201).json(savedUser)
 })
 
-usersRouter.delete('/:id', (request, response, next) => {
+usersRouter.delete('/:id', async (request, response, next) => {
     const token = request.cookies.userCookie;
     const decodedToken = jwt.verify(token, process.env.SECRET)
-    console.log(decodedToken)
   
     if (!decodedToken.id) {
       return response.status(401).json({ error: 'Invalid token' })
     }
-    User.findByIdAndRemove(request.params.id)
-      .then(() => {
-        response.status(204).end()
-      })
-      .catch(error => next(error))
+    const deletedUser = await User.findByIdAndRemove(request.params.id)
+    console.log(deletedUser)
+    response.status(204).end()
+    return { success: true, message: 'Your account has been successfully deleted' }
 })
 
 module.exports = usersRouter

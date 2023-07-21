@@ -17,17 +17,19 @@ export default function Home() {
     const loginContext = useContext(LoginContext)
     console.log(loginContext)
   
-    // if user has a cookie, log them in on first render
+    // if user has a cookie, log them in on first render. TODO: refresh token
     useEffect(() => {
         async function loginWithCookie() {
             try {
                 const user = await loginService.login()
-                entriesService.setToken(user.token)
-                loginContext.setLoggedInUser({ username: user.username, id: user.id })
-                console.log(user)
-              } catch (error) {
-                console.error(error)
-              }   
+                if (user) {
+                  entriesService.setToken(user.token)
+                  loginContext.setLoggedInUser( {username: user.username, id: user.id} )
+                  console.log(user)
+                } 
+                } catch (error) {
+                    console.error(error)   
+            }
         }
         loginWithCookie()
     }, [])
