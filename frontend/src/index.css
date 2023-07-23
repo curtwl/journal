@@ -112,11 +112,11 @@ a:link {
 }
 
 .title {
-  position: sticky;
+  
   top: 0;
   background-color: rgb(250, 246, 246);
   padding: 0.5em;
-  z-index: 1;
+  
   border-bottom: solid lightgray;
   font-size: 1.5rem;
   font-weight: 700;
@@ -174,6 +174,32 @@ a:link {
   margin-left: 40%;
   color: red;
   /* margin-right: 30%; */
+}
+
+.edit-modal {
+  width: 60%;
+  height: 60%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  margin: auto;
+  background-color: rgb(200, 232, 232);
+  padding: 2em;
+  border: solid beige;
+  border-radius: 4.5px;
+  
+}
+
+.edit-modal-header {
+  display:flex;
+  justify-content: space-between;
+}
+
+.modal-close-btn {
+  background-color: black;
+  color: whitesmoke;
 }
 
 @media (max-width: 550px) {

@@ -17,9 +17,13 @@ const Posts = ({journalEntries, setJournalEntries}) => {
   }
 
   const deleteEntryHandler = async (entry) => {
-    const noteToDelete = await entriesService.deleteEntry(entry.id)
-    console.log(noteToDelete)
-    setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
+    try {
+      const noteToDelete = await entriesService.deleteEntry(entry.id)
+      console.log(noteToDelete)
+      setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
+    } catch (error) {
+        console.error(error)
+    }
   }
 
   const postsHTML = journalEntries.map((entry) => (
@@ -35,9 +39,12 @@ const Posts = ({journalEntries, setJournalEntries}) => {
 
   console.log(entryToEdit)
   return (
+    <>
     <div className="posts-container">
       {postsHTML}
-      {entryToEdit && <EditForm 
+
+    </div>
+    {editModal && <EditForm 
                         journalEntries={journalEntries}
                         setJournalEntries={setJournalEntries}
                         entryToEdit={entryToEdit}
@@ -45,8 +52,10 @@ const Posts = ({journalEntries, setJournalEntries}) => {
                         setEditedPostTitle={setEditedPostTitle}
                         editedPostBody={editedPostBody}
                         setEditedPostBody={setEditedPostBody}
+                        editModal={editModal}
+                        setEditModal={setEditModal}
                       />}
-    </div>
+    </>
   )
 }
 

@@ -15,7 +15,7 @@ const Header = () => {
   }
 
   return (
-    <div className='header-container'>
+    <header className='header-container'>
       <div className='header-main'>
         <h1><Link to="/" className="header-link">Digital Journal</Link></h1>
         <h2>&nbsp;| {pathsForJSX[pathname]}</h2>
@@ -33,6 +33,6 @@ const Header = () => {
           { loginContext?.loggedInUser ? loginContext.loggedInUser.username : 'Sign Up' }
         </Link>
       </div>
-    </div>
+    </header>
 )}
 export default Header

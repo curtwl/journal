@@ -43,15 +43,19 @@ export default function Home() {
     }, [])
   
     return (
-      <div>
-        <Form 
-          journalEntries={journalEntries}
-          setJournalEntries={setJournalEntries}
-        />
-        <Posts 
-          journalEntries={journalEntries}
-          setJournalEntries={setJournalEntries}
-        />
-      </div>
+      <main>
+        <section>
+          <Form 
+            journalEntries={journalEntries}
+            setJournalEntries={setJournalEntries}
+          />
+        </section>
+        <section>
+          <Posts 
+            journalEntries={journalEntries}
+            setJournalEntries={setJournalEntries}
+          />
+        </section>
+      </main>
     )
   }
