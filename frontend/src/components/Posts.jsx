@@ -1,9 +1,18 @@
 import EditForm from './EditForm'
 import entriesService from '../services/entriesService'
+import { useState } from 'react'
 
 const Posts = ({journalEntries, setJournalEntries}) => {
+  const [entryToEdit, setEntryToEdit] = useState(null)
+  const [editModal, setEditModal] = useState(null)
+  const [editedPostTitle, setEditedPostTitle] = useState('')
+  const [editedPostBody, setEditedPostBody] = useState('')
+
   const editEntryHandler = (entry) => {
     setEntryToEdit(entry)
+    setEditedPostTitle(entry.title)
+    setEditedPostBody(entry.content)
+    console.log(entry)
     setEditModal(true)
   }
 
@@ -23,10 +32,20 @@ const Posts = ({journalEntries, setJournalEntries}) => {
       </div>
     </div>
   ))
+
+  console.log(entryToEdit)
   return (
     <div className="posts-container">
       {postsHTML}
-      {/* <EditForm /> */}
+      {entryToEdit && <EditForm 
+                        journalEntries={journalEntries}
+                        setJournalEntries={setJournalEntries}
+                        entryToEdit={entryToEdit}
+                        editedPostTitle={editedPostTitle}
+                        setEditedPostTitle={setEditedPostTitle}
+                        editedPostBody={editedPostBody}
+                        setEditedPostBody={setEditedPostBody}
+                      />}
     </div>
   )
 }

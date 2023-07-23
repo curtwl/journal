@@ -1,6 +1,10 @@
 import entriesService from '../services/entriesService'
+import { useState } from 'react'
 
-const Form = ({postTitle, postBody, setPostTitle, setPostBody, journalEntries, setJournalEntries}) => {
+const Form = ({journalEntries, setJournalEntries}) => {
+  const [postTitle, setPostTitle] = useState('')
+  const [postBody, setPostBody] = useState('')
+
   const addEntry = async (event) => {
     event.preventDefault()
     

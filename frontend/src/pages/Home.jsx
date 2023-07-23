@@ -1,18 +1,16 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, createContext } from 'react'
 import entriesService from '../services/entriesService'
 import Form from '../components/Form'
 import Posts from '../components/Posts'
 import { LoginContext } from "../components/LoginWrapper"
 import loginService from '../services/loginService'
 
+const EntriesContext = createContext(null)
+
 export default function Home() {
     const [journalEntries, setJournalEntries] = useState([])
-    const [postTitle, setPostTitle] = useState('')
-    const [postBody, setPostBody] = useState('')
-    const [editModal, setEditModal] = useState(false)
-    const [entryToEdit, setEntryToEdit] = useState(null)
 
     const loginContext = useContext(LoginContext)
     console.log(loginContext)
@@ -44,17 +42,11 @@ export default function Home() {
   
     }, [])
   
-
-  
     return (
       <div>
         <Form 
           journalEntries={journalEntries}
           setJournalEntries={setJournalEntries}
-          postTitle={postTitle}
-          postBody={postBody}
-          setPostTitle={setPostTitle}
-          setPostBody={setPostBody}
         />
         <Posts 
           journalEntries={journalEntries}

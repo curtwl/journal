@@ -51,7 +51,7 @@ const createEntry = async (newEntry) => {
 }
 
 const updateEntry = async (id, updatedEntry) => {
-  const request = await axios.put(`${baseURL}/${id}`, updatedEntry)
+  const response = await axios.put(`${baseURL}/${id}`, updatedEntry)
   return response.data
 }
 
