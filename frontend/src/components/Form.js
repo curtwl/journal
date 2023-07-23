@@ -1,4 +1,27 @@
-const Form = ({addEntry, postTitle, postBody, setPostTitle, setPostBody}) => {
+import entriesService from '../services/entriesService'
+
+const Form = ({postTitle, postBody, setPostTitle, setPostBody, journalEntries, setJournalEntries}) => {
+  const addEntry = async (event) => {
+    event.preventDefault()
+    
+    const newEntry = {
+      title: postTitle,
+      content: postBody
+    }
+    console.log(newEntry)
+
+    try {
+      const res = await entriesService.createEntry(newEntry)
+      setJournalEntries(journalEntries.concat(res))
+    } catch (error) {
+      console.error(error)
+    }
+
+    setPostTitle('')
+    setPostBody('')
+    console.log(journalEntries)
+  }
+
   return (
     <form className='form' onSubmit={addEntry}>
       <label htmlFor="post-title">Title:</label>

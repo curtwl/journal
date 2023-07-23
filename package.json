@@ -2,11 +2,16 @@
     "name": "journal",
     "version": "1.0.0",
     "scripts": {
-        "build:ui": "rm -rf build && cd ./frontend && npm run build && cp -r build ../backend",
-        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
-      },
-      "dependencies": {
-          "concurrently": "^6.0.0"
-      }
+      "start": "cd /backend node index.js",
+      "start:backend": "cd backend && npm start",
+      "build:frontend": "cd frontend && npm install && npm run build",
+      "deploy": "cd backend && npm install && fly deploy",
+      "deploy:backend": "cd backend && npm install && fly deploy",
+      "deploy:frontend": "cd frontend && npm install && fly deploy",
+      "deploy:full": "npm run build:frontend && npm run deploy:backend && npm run deploy:frontend"
+    },
+    "dependencies": {
+      
+    }
   }
   

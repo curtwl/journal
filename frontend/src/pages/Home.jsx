@@ -44,44 +44,13 @@ export default function Home() {
   
     }, [])
   
-    const addEntry = async (event) => {
-      event.preventDefault()
-      
-      const newEntry = {
-        title: postTitle,
-        content: postBody
-      }
-      console.log(newEntry)
 
-      try {
-        const res = await entriesService.createEntry(newEntry)
-        setJournalEntries(journalEntries.concat(res))
-      } catch (error) {
-        console.error(error)
-      }
-  
-      setPostTitle('')
-      setPostBody('')
-      // setJournalEntries(journalEntries.concat(newEntry))
-      console.log(journalEntries)
-    }
-  
-    const editEntryHandler = (entry) => {
-      setEntryToEdit(entry)
-      setEditModal(true)
-    }
-  
-    const deleteEntryHandler = async (entry) => {
-      const noteToDelete = await entriesService.deleteEntry(entry.id)
-      console.log(noteToDelete)
-      setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
-  
-    }
   
     return (
       <div>
         <Form 
-          addEntry={addEntry}
+          journalEntries={journalEntries}
+          setJournalEntries={setJournalEntries}
           postTitle={postTitle}
           postBody={postBody}
           setPostTitle={setPostTitle}
@@ -89,8 +58,8 @@ export default function Home() {
         />
         <Posts 
           journalEntries={journalEntries}
-          editEntryHandler={editEntryHandler}
-          deleteEntryHandler={deleteEntryHandler} />
+          setJournalEntries={setJournalEntries}
+        />
       </div>
     )
   }
