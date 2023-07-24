@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const baseURL = '/api/entries'
+const baseURL = 'https://chingu-journal.onrender.com/api/entries'
 let token = null
 
 const setToken = (newToken) => {
