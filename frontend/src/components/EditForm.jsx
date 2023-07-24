@@ -39,7 +39,7 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
       <div className="edit-modal">
         <div className="edit-modal-header">
           <h2>Edit your journal entry</h2>
-          <button className="modal-close-btn" onClick={closeModal}>Cancel</button>
+          <button className="modal-close-btn" onClick={closeModal}>X</button>
         </div>
         <form className='form' onSubmit={editEntry}>
             <label htmlFor="post-title">Title:</label>
