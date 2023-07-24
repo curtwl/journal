@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseURL = '/api/signup'
+const baseURL = 'https://chingu-journal.onrender.com/api/signup'
 import Cookies from 'js-cookie'
 
 const signup = async (userObject) => {
