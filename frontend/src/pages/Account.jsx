@@ -8,12 +8,12 @@ export default function Account() {
 
     const deleteAccountHandler = () => {
         if (window.confirm('delete account?'))
-        signupService.deleteAccount(loginContext.loggedInUser.id)
+        signupService.deleteAccount(loginContext.loggedInUser?.id)
     }
     console.log(loginContext.loggedInUser)
     return (
         <div>
-            <h4>Change Account Settings for {loginContext.loggedInUser.username}:</h4>
+            <h4>Change Account Settings for {loginContext.loggedInUser?.username}:</h4>
             <div className="delete-account">
               <button onClick={deleteAccountHandler}>Delete Account</button>
             </div>
