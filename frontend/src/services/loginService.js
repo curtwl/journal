@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseURL = '/api/login'
+const baseURL = 'https://chingu-journal.onrender.com/api/login'
 
 const login = async (userObject=null) => {
   console.log(userObject, 'userObject')
