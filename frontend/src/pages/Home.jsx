@@ -4,6 +4,7 @@ import { useState, useEffect, useContext, createContext } from 'react'
 import entriesService from '../services/entriesService'
 import Form from '../components/Form'
 import Posts from '../components/Posts'
+import Notification from "../components/Notification"
 import { LoginContext } from "../components/LoginWrapper"
 import loginService from '../services/loginService'
 
@@ -11,6 +12,7 @@ const EntriesContext = createContext(null)
 
 export default function Home() {
     const [journalEntries, setJournalEntries] = useState([])
+    const [notificationMessage, setNotificationMessage] = useState('')
 
     const loginContext = useContext(LoginContext)
     console.log(loginContext)
@@ -48,14 +50,20 @@ export default function Home() {
           <Form 
             journalEntries={journalEntries}
             setJournalEntries={setJournalEntries}
+            setNotificationMessage={setNotificationMessage}
           />
         </section>
         <section>
           <Posts 
             journalEntries={journalEntries}
             setJournalEntries={setJournalEntries}
+            setNotificationMessage={setNotificationMessage}
           />
         </section>
+        {notificationMessage.message &&<Notification 
+          setNotificationMessage={setNotificationMessage}
+          notificationMessage={notificationMessage}
+        />}
       </main>
     )
   }

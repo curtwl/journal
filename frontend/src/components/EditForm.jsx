@@ -2,7 +2,7 @@ import Form from "./Form"
 import { useState } from 'react'
 import entriesService from '../services/entriesService'
 
-const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostBody, setEditedPostBody, journalEntries, setJournalEntries, editModal, setEditModal}) => {
+const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostBody, setEditedPostBody, journalEntries, setJournalEntries, setEditModal, setNotificationMessage}) => {
     console.log(editedPostBody)
 
     const editEntry = async (event) => {
@@ -23,6 +23,9 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
     
         setEditedPostTitle('')
         setEditedPostBody('')
+        setNotificationMessage({ message: "Your journal has been updated!", type: "success"})
+        setTimeout(() => setNotificationMessage(''), 2500)
+        
 
         setTimeout(() => setEditModal(null), 1000)
         console.log(journalEntries)

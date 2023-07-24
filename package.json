@@ -2,16 +2,16 @@
     "name": "journal",
     "version": "1.0.0",
     "scripts": {
-      "start": "cd /backend node index.js",
-      "start:backend": "cd backend && npm start",
-      "build:frontend": "cd frontend && npm install && npm run build",
-      "deploy": "cd backend && npm install && fly deploy",
-      "deploy:backend": "cd backend && npm install && fly deploy",
-      "deploy:frontend": "cd frontend && npm install && fly deploy",
-      "deploy:full": "npm run build:frontend && npm run deploy:backend && npm run deploy:frontend"
+        "start": "npm run start:backend && npm run start:frontend",
+        "start:backend": "cd backend && npm start",
+        "start:frontend": "cd frontend && npm start",
+        "build:frontend": "cd frontend && npm install && npm run build",
+        "deploy": "cd backend && npm install && fly deploy",
+        "deploy:backend": "cd backend && npm install && fly deploy",
+        "deploy:frontend": "cd frontend && npm install && fly deploy",
+        "deploy:full": "npm run build:frontend && npm run deploy:backend && npm run deploy:frontend"
     },
     "dependencies": {
-      
+        "bcrypt": "^5.1.0"
     }
-  }
-  
+}

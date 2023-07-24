@@ -2,7 +2,7 @@ import EditForm from './EditForm'
 import entriesService from '../services/entriesService'
 import { useState } from 'react'
 
-const Posts = ({journalEntries, setJournalEntries}) => {
+const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
   const [entryToEdit, setEntryToEdit] = useState(null)
   const [editModal, setEditModal] = useState(null)
   const [editedPostTitle, setEditedPostTitle] = useState('')
@@ -54,6 +54,7 @@ const Posts = ({journalEntries, setJournalEntries}) => {
                         setEditedPostBody={setEditedPostBody}
                         editModal={editModal}
                         setEditModal={setEditModal}
+                        setNotificationMessage={setNotificationMessage}
                       />}
     </>
   )
