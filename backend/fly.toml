@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "holy-moon-8929"
+app = "chingu-journal"
 primary_region = "bos"
 
 [http_service]
