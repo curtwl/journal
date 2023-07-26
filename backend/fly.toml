@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for chingu-journal on 2023-07-20T21:31:52-05:00
+# fly.toml app configuration file generated for holy-moon-8929 on 2023-07-25T18:30:16-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -6,24 +6,10 @@
 app = "chingu-journal"
 primary_region = "bos"
 
-[env]
-  PORT = "8080"
-
-[[services]]
-  http_checks = []
-  internal_port = 8080 
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
   processes = ["app"]
-
-   protocol = "tcp"
-
-  [services.concurrency]
-  hard_limit = 25
-  soft_limit = 20
-
-  [[services.ports]]
-  handlers = ["http"]
-  port = "80"
-
-  [[services.ports]]
-  handlers = ["tls", "http"]
-  port = "443"

@@ -54,11 +54,13 @@ export default function Home() {
           />
         </section>
         <section>
+          <div className="relative">
           <Posts 
             journalEntries={journalEntries}
             setJournalEntries={setJournalEntries}
             setNotificationMessage={setNotificationMessage}
           />
+          </div>
         </section>
         {notificationMessage.message &&<Notification 
           setNotificationMessage={setNotificationMessage}

@@ -43,7 +43,7 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
           </div>
             <h2>Edit your journal entry</h2>
         </div>
-        <form className='form' onSubmit={editEntry}>
+        <form className='edit-form' onSubmit={editEntry}>
             <label htmlFor="post-title">Title:</label>
             <input id="post-title" value={editedPostTitle} onChange={({ target }) => setEditedPostTitle(target.value)} />
             <label htmlFor="post-body">Body:</label>
