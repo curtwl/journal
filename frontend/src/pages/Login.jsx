@@ -3,7 +3,7 @@ import { useState, useContext } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
 import loginService from '../services/loginService'
 import entriesService from '../services/entriesService'
-import { LoginContext } from "../components/LoginWrapper"
+import { LoginContext } from "../components/ContextProvider"
 
 export default function Login() {
     const [username, setUsername] = useState('')

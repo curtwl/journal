@@ -63,7 +63,7 @@ a:link {
   padding: 15px;
 }
 
-.form > button {
+.submit-btn {
   min-width: 80px;
   width: 6%;
   padding: 0.7em;
@@ -87,6 +87,11 @@ a:link {
 .relative {
   position: relative;
 }
+
+.semi-transparent {
+  opacity: 0.4;
+}
+
 .posts-container {
   /* display: flex; */
   display: grid;
@@ -100,10 +105,10 @@ a:link {
   /* grid-template-rows: 200px 100px 100px; */
   grid-template-rows: auto;
   position: relative;
-  
+  opacity: 1;
 }
 
-.posts-container > div {
+.posts-container-element {
   display: flex;
   flex-direction: column;
   /* position: relative; */
@@ -155,7 +160,7 @@ a:link {
   right: 0%; */
 }
 
-.post-container:hover .edit-delete {
+.posts-container:hover .edit-delete {
   /* visibility: visible; */
   display: flex;
   font-size: 0.8rem;
@@ -238,9 +243,9 @@ flex-direction: column;
 }
 
 .edit-form {
-  /* margin: 0px 0px;
+  margin: 0px 0px;
   display: grid;
-  grid-template-columns: auto;
+  /* grid-template-columns: auto;
   grid-template-rows: 100px; */
 }
 

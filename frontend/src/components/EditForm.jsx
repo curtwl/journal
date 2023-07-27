@@ -1,9 +1,11 @@
 import Form from "./Form"
-import { useState } from 'react'
+import { useContext } from 'react'
 import entriesService from '../services/entriesService'
+import { EditModalContext } from "./ContextProvider"
 
-const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostBody, setEditedPostBody, journalEntries, setJournalEntries, setEditModal, setNotificationMessage}) => {
+const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostBody, setEditedPostBody, journalEntries, setJournalEntries, setNotificationMessage}) => {
     console.log(editedPostBody)
+    const editModalContext = useContext(EditModalContext)
 
     const editEntry = async (event) => {
         event.preventDefault()
@@ -27,12 +29,15 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
         setTimeout(() => setNotificationMessage(''), 2500)
         
 
-        setTimeout(() => setEditModal(null), 1000)
+        setTimeout(() => {
+          editModalContext.setEditModal(null), 
+          1000})
+        
         console.log(journalEntries)
       }
 
     const closeModal = () => {
-        setEditModal(null)
+      editModalContext.setEditModal(null)
     }
 
     return (
@@ -48,7 +53,7 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
             <input id="post-title" value={editedPostTitle} onChange={({ target }) => setEditedPostTitle(target.value)} />
             <label htmlFor="post-body">Body:</label>
             <textarea id="post-body" value={editedPostBody} onChange={({ target }) => setEditedPostBody(target.value)} />
-            <button type='submit'>Submit</button>
+            <button className='submit-btn' type='submit'>Submit</button>
         </form>
       </div>
     )

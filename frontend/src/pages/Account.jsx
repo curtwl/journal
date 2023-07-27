@@ -1,6 +1,6 @@
 import React from "react"
 import { useContext } from "react"
-import { LoginContext } from "../components/LoginWrapper"
+import { LoginContext } from "../components/ContextProvider"
 import signupService from '../services/signupService'
 
 export default function Account() {

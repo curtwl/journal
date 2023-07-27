@@ -1,19 +1,20 @@
 import EditForm from './EditForm'
 import entriesService from '../services/entriesService'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { EditModalContext } from "./ContextProvider"
 
 const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
   const [entryToEdit, setEntryToEdit] = useState(null)
-  const [editModal, setEditModal] = useState(null)
   const [editedPostTitle, setEditedPostTitle] = useState('')
   const [editedPostBody, setEditedPostBody] = useState('')
+  const editModalContext = useContext(EditModalContext)
 
   const editEntryHandler = (entry) => {
     setEntryToEdit(entry)
     setEditedPostTitle(entry.title)
     setEditedPostBody(entry.content)
     console.log(entry)
-    setEditModal(true)
+    editModalContext.setEditModal(true)
   }
 
   const deleteEntryHandler = async (entry) => {
@@ -27,7 +28,7 @@ const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
   }
 
   const postsHTML = journalEntries.map((entry) => (
-    <div className="post-container" key={entry.title}>
+    <div className={`posts-container-element ${editModalContext.editModal ? 'semi-transparent' : ''}`} key={entry.title}>
       <div className="title">{entry.title}</div>
       <div className="content">{entry.content}</div>
       <div className="edit-delete">
@@ -40,11 +41,11 @@ const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
   console.log(entryToEdit)
   return (
     <>
-    <div className="posts-container">
+    <div className={`posts-container ${editModalContext.editModal ? 'semi-transparent' : ''}`}>
       {postsHTML}
 
     </div>
-    {editModal && <EditForm 
+    {editModalContext.editModal && <EditForm 
                         journalEntries={journalEntries}
                         setJournalEntries={setJournalEntries}
                         entryToEdit={entryToEdit}
@@ -52,8 +53,6 @@ const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
                         setEditedPostTitle={setEditedPostTitle}
                         editedPostBody={editedPostBody}
                         setEditedPostBody={setEditedPostBody}
-                        editModal={editModal}
-                        setEditModal={setEditModal}
                         setNotificationMessage={setNotificationMessage}
                       />}
     </>

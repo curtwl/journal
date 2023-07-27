@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import Layout from "./components/Layout"
-import LoginContext from "./components/LoginWrapper"
+import LoginContext from "./components/ContextProvider"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"

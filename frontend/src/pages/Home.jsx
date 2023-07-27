@@ -5,7 +5,7 @@ import entriesService from '../services/entriesService'
 import Form from '../components/Form'
 import Posts from '../components/Posts'
 import Notification from "../components/Notification"
-import { LoginContext } from "../components/LoginWrapper"
+import { LoginContext } from "../components/ContextProvider"
 import loginService from '../services/loginService'
 
 const EntriesContext = createContext(null)

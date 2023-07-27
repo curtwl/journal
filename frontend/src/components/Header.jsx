@@ -1,10 +1,11 @@
 import React from "react"
 import { useContext } from 'react'
 import { Link, useLocation } from "react-router-dom"
-import { LoginContext } from "../components/LoginWrapper"
+import { LoginContext, EditModalContext } from "./ContextProvider"
 
-const Header = () => {
+const Header = ({ editModal }) => {
   const loginContext = useContext(LoginContext)
+  const editModalContext = useContext(EditModalContext)
   const { pathname } = useLocation()
   
   const pathsForJSX = {
@@ -15,7 +16,7 @@ const Header = () => {
   }
 
   return (
-    <header className='header-container'>
+    <header className={`header-container ${editModalContext.editModal ? 'semi-transparent' : ''}`}>
       <div className='header-main'>
         <h1><Link to="/" className="header-link">Digital Journal</Link></h1>
         <h2>&nbsp;| {pathsForJSX[pathname]}</h2>
