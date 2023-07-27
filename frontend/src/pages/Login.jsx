@@ -40,15 +40,15 @@ export default function Login() {
         
         <form className='signup-form' onSubmit={loginUser}>
             <label htmlFor="username">Username</label>
-            <input id="username" value={username} onChange={({ target }) => 
+            <input id="username" autocorrect="off" autocapitalize="off" value={username} onChange={({ target }) => 
                 {
                     console.log(username)
-                    setUsername(target.value)
+                    setUsername(target.value.trim())
                 } 
             }/>
             
             <label htmlFor="password">Password:</label>
-            <input id="password" value={password} onChange={({ target }) => setPassword(target.value)} />
+            <input id="password" autocorrect="off" autocapitalize="off" value={password} onChange={({ target }) => setPassword(target.value)} />
             <p>{ loginContext?.loggedInUser ? `Logged in! Welcome ${loginContext.loggedInUser.username}`
               : 'Login to create journals!'}</p>
             <button type='submit'>Submit</button>
