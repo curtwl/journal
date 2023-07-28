@@ -9,7 +9,10 @@ export default function ContextProvider({children}) {
     const loginContextValue  = { loggedInUser, setLoggedInUser }
 
     const [editModal, setEditModal] = useState(false)
-    const editModalContextValue = { editModal, setEditModal }
+    const closeModal = () => {
+      setEditModal(null)
+    }
+    const editModalContextValue = { editModal, setEditModal, closeModal }
 
   return (
     <LoginContext.Provider value={loginContextValue}>

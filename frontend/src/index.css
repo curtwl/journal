@@ -1,41 +1,62 @@
 body {
-  padding: 2rem;
+  padding: 0.5rem;
+  margin: 8;
 }
 
-.header-container, .header-main, .login {
+.header-container, .header-login {
   display: flex;
   flex-direction: row;
   align-items: center;
   
 }
+
+.header-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
 .header-container {
   justify-content: space-between;
-}
-
-.login > a {
-  margin-left: 5%;
-  text-decoration: none;
-  font-size: 0.8rem;
-}
-
-a:link {
-  color: rgb(0, 123, 255);
-}
-
-.header-link {
-  text-decoration: none;
-  color: black;
-  font-size: 1.2rem;
+  align-items: start;
 }
 
 .header-link:hover{
   text-decoration: underline;
 }
 
+.header-main > h1 {
+  margin: 0;
+}
+
+.header-link {
+  text-decoration: none;
+  color: black;
+  font-size: 1.7rem;
+}
+
 .header-main > h2 {
   color: gray;
   font-size: 0.8rem;
-  
+  margin-top: 0;
+}
+
+.header-login {
+  margin: 0;
+  min-width: 30%;
+  align-items: start;
+  justify-content: end;
+  font-size: 0.6rem;
+}
+
+.header-login > a {
+  margin-left: 5%;
+  text-decoration: none;
+}
+
+a:link {
+  color: rgb(0, 123, 255);
 }
 
 #logout-btn {
@@ -43,7 +64,7 @@ a:link {
   background: none;
   cursor: pointer;
   color: #069;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 .form {
@@ -279,9 +300,27 @@ flex-direction: column;
 }
 
 @media (min-width: 768px) {
+  body {
+    padding: 2rem;
+    margin: 8;
+  }
+
+  .header-container, .header-main , .header-login {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+  }
+  
+  .header-main > h1 {
+    margin: 1em 0;
+  }
+  
+
   .header-main > h2 {
     color: gray;
     font-size: 1.5rem;
+    margin-bottom: 0;
   }
 
   .header-link {
@@ -303,7 +342,6 @@ flex-direction: column;
     /* grid-template-rows: 200px 100px 100px; */
     grid-template-rows: auto;
     
-    
   }
 
   .signup-form {
@@ -311,7 +349,7 @@ flex-direction: column;
     max-width: 25%;
   }
 
-  .login > a {
+  .header-login > a {
     margin-left: 22px;
     text-decoration: none;
     font-size: 1.8rem;

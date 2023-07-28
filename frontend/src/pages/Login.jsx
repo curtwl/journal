@@ -40,7 +40,7 @@ export default function Login() {
         
         <form className='signup-form' onSubmit={loginUser}>
             <label htmlFor="username">Username</label>
-            <input id="username" spellCheck="false" autocapitalize="none" value={username} onChange={({ target }) => 
+            <input id="username" spellcheck="false" autocapitalize="none" value={username} onChange={({ target }) => 
                 {
                     console.log(username)
                     setUsername(target.value.trim())

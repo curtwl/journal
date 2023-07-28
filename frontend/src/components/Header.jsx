@@ -16,12 +16,15 @@ const Header = ({ editModal }) => {
   }
 
   return (
-    <header className={`header-container ${editModalContext.editModal ? 'semi-transparent' : ''}`}>
+    <header 
+      className={`header-container ${editModalContext.editModal ? 'semi-transparent' : ''}`}
+      onClick={editModalContext.closeModal}
+    >
       <div className='header-main'>
-        <h1><Link to="/" className="header-link">Digital Journal</Link></h1>
-        <h2>&nbsp;| {pathsForJSX[pathname]}</h2>
+        <h1 className="header-title"><Link to="/" className="header-link">Digital Journal&nbsp;</Link></h1>
+        <h2>| {pathsForJSX[pathname]}</h2>
       </div>
-      <div className='login'>
+      <div className='header-login'>
         {loginContext?.loggedInUser ? 
           <button id="logout-btn" onClick={() => loginContext.setLoggedInUser(null)}>Logout</button>
         :

@@ -36,15 +36,11 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
         console.log(journalEntries)
       }
 
-    const closeModal = () => {
-      editModalContext.setEditModal(null)
-    }
-
     return (
       <div className="edit-modal">
         <div className="edit-modal-header">
           <div className="modal-close-btn-container">
-          <button className="modal-close-btn" onClick={closeModal}>X</button>
+          <button className="modal-close-btn" onClick={editModalContext.closeModal}>X</button>
           </div>
             <h2>Edit your journal entry</h2>
         </div>
