@@ -4,17 +4,13 @@ const Notification = ({ notificationMessage }) => {
     }
     else if (notificationMessage.type === 'success') {
       return (
-        <div className="notification">
-          <div className='success'>{notificationMessage.message}</div>
-        </div>
+        <div className='notification success'>✅ {notificationMessage.message}</div>
       )
     }
     else {
-        return (
-            <div className="notification">
-              <div className='error'>{notificationMessage.message}</div>
-            </div>
-          )
+      return (
+        <div className='notification error'>❌ {notificationMessage.message}</div>
+      )
        
     }
   }

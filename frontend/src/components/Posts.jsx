@@ -24,6 +24,8 @@ const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
       setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
     } catch (error) {
         console.error(error)
+        setNotificationMessage({ message: "Please try again.", type: "error"})
+        setTimeout(() => setNotificationMessage(''), 3500)
     }
   }
 

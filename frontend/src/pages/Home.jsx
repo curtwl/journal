@@ -8,8 +8,6 @@ import Notification from "../components/Notification"
 import { LoginContext } from "../components/ContextProvider"
 import loginService from '../services/loginService'
 
-const EntriesContext = createContext(null)
-
 export default function Home() {
     const [journalEntries, setJournalEntries] = useState([])
     const [notificationMessage, setNotificationMessage] = useState('')
@@ -32,18 +30,15 @@ export default function Home() {
             }
         }
         loginWithCookie()
-    }, [])
 
-    useEffect(() => {
-      entriesService
+        entriesService
         .getAllEntries()
         .then(intialEntries => {
           setJournalEntries(intialEntries)
         })
         .catch(error => console.log(error))
-  
     }, [])
-  
+
     return (
       <main>
         <section>

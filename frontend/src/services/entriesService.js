@@ -17,10 +17,10 @@ const getAllEntries = async () => {
       headers: { 'userCookie': userCookie }
     }
     
-    const response = await axios.post('/api/login', config)
-    const response2 = await axios.get(baseURL)
-    
-    return response.data, response2.data
+    await axios.post('/api/login', config)
+    const response = await axios.get(baseURL)
+ 
+    return response.data
   }
   catch (error) {
     if (error.response) {

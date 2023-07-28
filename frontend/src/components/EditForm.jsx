@@ -26,7 +26,7 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
         setEditedPostTitle('')
         setEditedPostBody('')
         setNotificationMessage({ message: "Your journal has been updated!", type: "success"})
-        setTimeout(() => setNotificationMessage(''), 2500)
+        setTimeout(() => setNotificationMessage(''), 3500)
         
 
         setTimeout(() => {
