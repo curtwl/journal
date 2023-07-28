@@ -33,9 +33,9 @@ const Header = ({ editModal }) => {
           </Link>
         }
 
-        <Link to={loginContext?.loggedInUser ? "/account" : "/signup"}>
+          <Link to={loginContext?.loggedInUser ? "/account" : "/signup"} className="header-signup">
           { loginContext?.loggedInUser ? loginContext.loggedInUser.username : 'Sign Up' }
-        </Link>
+          </Link>
       </div>
     </header>
 )}
