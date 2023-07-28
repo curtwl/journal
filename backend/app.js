@@ -2,6 +2,7 @@ const config = require('./utils/config')
 const express = require('express')
 require('express-async-errors')
 const app = express()
+const path = require('path')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const entriesRouter = require('./controllers/entries')
@@ -32,6 +33,10 @@ app.use(middleware.requestLogger)
 app.use('/api/entries', entriesRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/signup', usersRouter)
+// catch reloads from routes other than '/'
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
