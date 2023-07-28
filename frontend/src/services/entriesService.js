@@ -17,7 +17,6 @@ const getAllEntries = async () => {
       headers: { 'userCookie': userCookie }
     }
     
-    await axios.post('/api/login', config)
     const response = await axios.get(baseURL)
  
     return response.data
@@ -32,10 +31,7 @@ const getAllEntries = async () => {
     } else {
       console.log('Error', error.message)
     }
-    const response = await axios.get(baseURL)
-    return response.data
   }
-  
 }
 
 const createEntry = async (newEntry) => {
@@ -51,7 +47,12 @@ const createEntry = async (newEntry) => {
 }
 
 const updateEntry = async (id, updatedEntry) => {
-  const response = await axios.put(`${baseURL}/${id}`, updatedEntry)
+  const userCookie = Cookies.get('userCookie')
+
+  const config = {
+    'userCookie': userCookie
+  }
+  const response = await axios.put(`${baseURL}/${id}`, updatedEntry, config)
   return response.data
 }
 

@@ -14,4 +14,17 @@ const login = async (userObject=null) => {
   }
 }
 
-export default { login }
+const loginWithCookie = async () => {
+  try {
+    const userCookie = Cookies.get('userCookie')
+
+    const config = {
+      headers: { 'userCookie': userCookie }
+    }
+    
+    await axios.post('/api/login', config)
+  } catch (error) {
+    console.log(error)
+  }
+}
+export default { login, loginWithCookie }
