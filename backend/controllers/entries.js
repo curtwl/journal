@@ -5,11 +5,23 @@ const jwt = require('jsonwebtoken')
 
 entriesRouter.get('/', async (request, response) => { 
     const token = request.cookies.userCookie
-    //console.log(token)
     if (token) {
-      const decodedToken = jwt.verify(token, process.env.SECRET)
-      const entries = await Entry.find({author: decodedToken.id})
-      response.json(entries)
+      let decodedToken = null
+       try {
+        decodedToken = jwt.verify(token, process.env.SECRET)
+        console.log(decodedToken)
+       } catch {
+        console.log("catch jwt expired")
+       }
+      console.log('escape try catch')
+      if (decodedToken?.id) {
+        const entries = await Entry.find({author: decodedToken.id})
+        response.json(entries)
+        // can remove after cookie deletion added
+      } else {
+        const entries = await Entry.find({}).populate('author', 'username')
+        response.json(entries)
+      }
     } else {
       const entries = await Entry.find({}).populate('author', 'username')
       response.json(entries)
