@@ -7,12 +7,17 @@ entriesRouter.get('/', async (request, response) => {
   try {
     const token = request.cookies.userCookie
     console.log(token)
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    const entries = await Entry.find({author: decodedToken.id})//.populate('author')
-    response.json(entries)
+    if (token) {
+      const decodedToken = jwt.verify(token, process.env.SECRET)
+      const entries = await Entry.find({author: decodedToken.id})//.populate('author')
+      response.json(entries)
+    } else {
+        const entries = await Entry.find({})
+        response.json(entries)
+    }
   } catch {
-    const entries = await Entry.find({})//.populate('author')
-    response.json(entries)
+    //.populate('author')
+    
   }
 })
 

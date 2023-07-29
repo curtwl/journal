@@ -38,7 +38,8 @@ const Posts = ({journalEntries, setJournalEntries}) => {
     }
 
   const postsHTML = journalEntries.map((entry) => (
-    <div className={`posts-container-element ${editModalContext.editModal ? 'semi-transparent' : ''}`} key={entry.title}>
+    <div className={`posts-container-element ${editModalContext.editModal ?
+                    'semi-transparent' : ''}`} key={entry.id} >
       <div className="title">{entry.title}</div>
       <div className="content">{entry.content}</div>
       <div className="edit-delete">

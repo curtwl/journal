@@ -1,4 +1,4 @@
-### TODO: Fix unknown endpoint bug when reloading /login or /signup (doesn't occur locally)
+### TODO: Fix edit modal for mobile landscape view
 ### TODO: Refresh token
 ### TODO: Delete cookie on logout
 ### TODO: Login after sign up
