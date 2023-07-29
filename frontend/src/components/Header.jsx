@@ -16,11 +16,9 @@ const Header = ({ editModal }) => {
   }
 
   return (
-    <header 
-      className={`header-container ${editModalContext.editModal ? 'semi-transparent' : ''}`}
-      onClick={editModalContext.closeModal}
-    >
-      <nav>
+    <header onClick={editModalContext.closeModal}>
+      <nav className={`header-container ${editModalContext.editModal ?
+                      'semi-transparent' : ''}`}>
         <div className='header-main'>
           <h1 className="header-title"><Link to="/" className="header-link">Digital Journal&nbsp;</Link></h1>
           <h2>| {pathsForJSX[pathname]}</h2>
