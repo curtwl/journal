@@ -18,7 +18,7 @@ const getAllEntries = async () => {
     }
     
     const response = await axios.get(baseURL)
- 
+    console.log(response.data)
     return response.data
   }
   catch (error) {

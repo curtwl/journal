@@ -4,21 +4,16 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 entriesRouter.get('/', async (request, response) => { 
-  try {
     const token = request.cookies.userCookie
-    console.log(token)
+    //console.log(token)
     if (token) {
       const decodedToken = jwt.verify(token, process.env.SECRET)
-      const entries = await Entry.find({author: decodedToken.id})//.populate('author')
+      const entries = await Entry.find({author: decodedToken.id})
       response.json(entries)
     } else {
-        const entries = await Entry.find({})
-        response.json(entries)
+      const entries = await Entry.find({}).populate('author', 'username')
+      response.json(entries)
     }
-  } catch {
-    //.populate('author')
-    
-  }
 })
 
 // doesn't work in browser, works in Postman...
