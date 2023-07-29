@@ -1,13 +1,15 @@
 import EditForm from './EditForm'
 import entriesService from '../services/entriesService'
 import { useState, useContext } from 'react'
-import { EditModalContext } from "./ContextProvider"
+import { EditModalContext, LoginContext, NotificationContext } from "./ContextProvider"
 
-const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
+const Posts = ({journalEntries, setJournalEntries}) => {
   const [entryToEdit, setEntryToEdit] = useState(null)
   const [editedPostTitle, setEditedPostTitle] = useState('')
   const [editedPostBody, setEditedPostBody] = useState('')
   const editModalContext = useContext(EditModalContext)
+  const loginContext = useContext(LoginContext)
+  const { showSuccess, showError, clearNotification } = useContext(NotificationContext)
 
   const editEntryHandler = (entry) => {
     setEntryToEdit(entry)
@@ -21,13 +23,19 @@ const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
     try {
       const noteToDelete = await entriesService.deleteEntry(entry.id)
       console.log(noteToDelete)
+      showSuccess("Journal entry deleted successfully")
+      setTimeout(() => clearNotification(), 3500)
       setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
     } catch (error) {
         console.error(error)
-        setNotificationMessage({ message: "Please try again.", type: "error"})
-        setTimeout(() => setNotificationMessage(''), 3500)
+        if (error.response?.status === 401) {
+          showError("You can only delete your own entries")
+        } else {
+          showError("Server error. Please try again!")
+        }
+        setTimeout(() => clearNotification(), 3500)
+      }
     }
-  }
 
   const postsHTML = journalEntries.map((entry) => (
     <div className={`posts-container-element ${editModalContext.editModal ? 'semi-transparent' : ''}`} key={entry.title}>
@@ -55,7 +63,6 @@ const Posts = ({journalEntries, setJournalEntries, setNotificationMessage}) => {
                         setEditedPostTitle={setEditedPostTitle}
                         editedPostBody={editedPostBody}
                         setEditedPostBody={setEditedPostBody}
-                        setNotificationMessage={setNotificationMessage}
                       />}
     </>
   )

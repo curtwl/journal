@@ -1,11 +1,12 @@
 import entriesService from '../services/entriesService'
 import { useState, useContext } from 'react'
-import { EditModalContext } from "./ContextProvider"
+import { EditModalContext, NotificationContext } from "./ContextProvider"
 
 const Form = ({journalEntries, setJournalEntries}) => {
   const [postTitle, setPostTitle] = useState('')
   const [postBody, setPostBody] = useState('')
   const editModalContext = useContext(EditModalContext)
+  const { showSuccess, showError, clearNotification } = useContext(NotificationContext)
 
   const addEntry = async (event) => {
     event.preventDefault()
@@ -19,8 +20,12 @@ const Form = ({journalEntries, setJournalEntries}) => {
     try {
       const res = await entriesService.createEntry(newEntry)
       setJournalEntries(journalEntries.concat(res))
+      showSuccess("Entry created!")
+      setTimeout(() => clearNotification(), 3000)
     } catch (error) {
       console.error(error)
+      showError("Could not create entry")
+      setTimeout(() => clearNotification(), 3000)
     }
 
     setPostTitle('')

@@ -1,11 +1,11 @@
-import Form from "./Form"
 import { useContext } from 'react'
 import entriesService from '../services/entriesService'
-import { EditModalContext } from "./ContextProvider"
+import { EditModalContext, NotificationContext } from "./ContextProvider"
 
 const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostBody, setEditedPostBody, journalEntries, setJournalEntries, setNotificationMessage}) => {
     console.log(editedPostBody)
     const editModalContext = useContext(EditModalContext)
+    const { showSuccess, showError, clearNotification } = useContext(NotificationContext)
 
     const editEntry = async (event) => {
         event.preventDefault()
@@ -21,18 +21,22 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
           setJournalEntries(journalEntries.map(e => e.id === entryToEdit.id ? res : e))
         } catch (error) {
           console.error(error)
+          showError("Could not edit")
+          setTimeout(() => clearNotification(), 3000)
         }
     
         setEditedPostTitle('')
         setEditedPostBody('')
-        setNotificationMessage({ message: "Your journal has been updated!", type: "success"})
-        setTimeout(() => setNotificationMessage(''), 3500)
+        showSuccess("Your journal has been updated!")
         
+        const editModalTimeout = setTimeout(() => {
+          editModalContext.closeModal()
+        }, 500)
 
         setTimeout(() => {
-          editModalContext.setEditModal(null), 
-          1000})
-        
+          clearNotification()
+          clearTimeout(editModalTimeout)
+        }, 3000)
         console.log(journalEntries)
       }
 

@@ -1,4 +1,13 @@
-const Notification = ({ notificationMessage }) => {
+import { useEffect, useContext } from "react"
+import { NotificationContext } from "./ContextProvider"
+
+const Notification = () => {
+  const { notificationMessage, clearNotification } = useContext(NotificationContext)
+
+  useEffect(() => {
+    setTimeout(() => clearNotification, 3000)
+  }, [])
+  console.log(notificationMessage)
     if (notificationMessage.message === '') {
       return null
     }

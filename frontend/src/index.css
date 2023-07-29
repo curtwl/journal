@@ -395,6 +395,7 @@ flex-direction: column;
   }
 
   .notification {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   
     width: 40%;
     height: 1%;

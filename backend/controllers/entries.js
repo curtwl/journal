@@ -55,14 +55,19 @@ entriesRouter.post('/', async (request, response) => {
 
 entriesRouter.delete('/:id', async (request, response, next) => {
     const token = request.cookies.userCookie;
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    console.log(decodedToken, 'decodedToken')
-
-    if (!decodedToken.id) {
+    try {
+      const decodedToken = jwt.verify(token, process.env.SECRET)
+    } catch (error) {
+      console.log('Invalid token')
       return response.status(401).json({ error: 'Invalid token' })
     }
+    //console.log(decodedToken, 'decodedToken')
 
-    const deletedEntry = await Entry.findByIdAndRemove(request.params.id)
+    // if (!decodedToken.id) {
+    //   return response.status(401).json({ error: 'Invalid token' })
+    // }
+
+    await Entry.findByIdAndRemove(request.params.id)
     response.status(204).end()
 })
 

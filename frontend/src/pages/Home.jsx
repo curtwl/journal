@@ -5,12 +5,12 @@ import entriesService from '../services/entriesService'
 import Form from '../components/Form'
 import Posts from '../components/Posts'
 import Notification from "../components/Notification"
-import { LoginContext } from "../components/ContextProvider"
+import { LoginContext, NotificationContext } from "../components/ContextProvider"
 import loginService from '../services/loginService'
 
 export default function Home() {
     const [journalEntries, setJournalEntries] = useState([])
-    const [notificationMessage, setNotificationMessage] = useState('')
+    const { notificationMessage } = useContext(NotificationContext)
 
     const loginContext = useContext(LoginContext)
     console.log(loginContext)
@@ -45,7 +45,6 @@ export default function Home() {
           <Form 
             journalEntries={journalEntries}
             setJournalEntries={setJournalEntries}
-            setNotificationMessage={setNotificationMessage}
           />
         </section>
         <section>
@@ -53,14 +52,10 @@ export default function Home() {
           <Posts 
             journalEntries={journalEntries}
             setJournalEntries={setJournalEntries}
-            setNotificationMessage={setNotificationMessage}
           />
           </div>
         </section>
-        {notificationMessage.message &&<Notification 
-          setNotificationMessage={setNotificationMessage}
-          notificationMessage={notificationMessage}
-        />}
+        {notificationMessage.message &&<Notification />}
       </main>
     )
   }
