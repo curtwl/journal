@@ -2,6 +2,7 @@ import React from "react"
 import { useContext } from "react"
 import { LoginContext } from "../components/ContextProvider"
 import signupService from '../services/signupService'
+import logoutService from '../services/logoutService'
 
 export default function Account() {
     const loginContext = useContext(LoginContext)
@@ -9,6 +10,8 @@ export default function Account() {
     const deleteAccountHandler = () => {
         if (window.confirm('delete account?'))
         signupService.deleteAccount(loginContext.loggedInUser?.id)
+        loginContext.setLoggedInUser(null)
+        logoutService.logout()
     }
     console.log(loginContext.loggedInUser)
     return (
