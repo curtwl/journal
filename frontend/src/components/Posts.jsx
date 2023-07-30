@@ -21,11 +21,13 @@ const Posts = ({journalEntries, setJournalEntries}) => {
 
   const deleteEntryHandler = async (entry) => {
     try {
-      const noteToDelete = await entriesService.deleteEntry(entry.id)
-      console.log(noteToDelete)
-      showSuccess("Journal entry deleted successfully")
-      setTimeout(() => clearNotification(), 3500)
-      setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
+      if (window.confirm("Are you sure you want to delete this entry?")) {
+        const noteToDelete = await entriesService.deleteEntry(entry.id)
+        console.log(noteToDelete)
+        showSuccess("Journal entry deleted successfully")
+        setTimeout(() => clearNotification(), 3500)
+        setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
+      }
     } catch (error) {
         console.error(error)
         if (error.response?.status === 401) {

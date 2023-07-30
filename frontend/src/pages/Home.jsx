@@ -46,7 +46,6 @@ export default function Home() {
             journalEntries={journalEntries}
             setJournalEntries={setJournalEntries}
           />
-          {notificationMessage.message &&<Notification />}
         </section>
         <section>
           <div className="relative">
