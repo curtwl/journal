@@ -37,7 +37,7 @@ const Posts = ({journalEntries, setJournalEntries}) => {
       }
     }
 
-  const postsHTML = journalEntries.map((entry) => (
+  const postsHTML = journalEntries.reverse().map((entry) => (
     <div className={`posts-container-element ${editModalContext.editModal ?
                     'semi-transparent' : ''}`} key={entry.id} >
       <div className="title">{entry.title}</div>
