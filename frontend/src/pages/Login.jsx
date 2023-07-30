@@ -12,6 +12,7 @@ export default function Login() {
 
     const loginContext = useContext(LoginContext)
     console.log(loginContext)
+    const navigate = useNavigate()
 
     const loginUser = async (event) => {
         console.log(username)
@@ -28,6 +29,7 @@ export default function Login() {
             if (user) {
               entriesService.setToken(user.token)
               loginContext.setLoggedInUser( {username: user.username, id: user.id} )
+              navigate('/')
           }
             console.log(user)
             // console.log(document.cookie, 'cookie')
