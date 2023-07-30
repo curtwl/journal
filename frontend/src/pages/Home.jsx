@@ -57,7 +57,7 @@ export default function Home() {
           />
           </div>
         </section>
-        {notificationMessage.message &&<Notification />}
+        {notificationMessage.message && <Notification />}
       </main>
     )
   }
