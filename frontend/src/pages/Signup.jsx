@@ -1,11 +1,16 @@
 import React from "react"
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
+import { LoginContext } from "../components/ContextProvider"
 import signupService from '../services/signupService'
+import loginService from '../services/loginService'
+import entriesService from '../services/entriesService'
 
 export default function Signup() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    const loginContext = useContext(LoginContext)
 
     const addUser = async (event) => {
         console.log(username)
@@ -14,12 +19,24 @@ export default function Signup() {
           username: username,
           password: password,
         }
-    
+
+        let user = null
         try {
-            const user = await signupService.signup(userObject)
-            console.log(user)
+            user = await signupService.signup(userObject)
           } catch (error) {
+            // error notification
             console.error(error)
+          }
+  
+        if (user) {
+          try {
+              const newUser = await loginService.login(userObject)
+              entriesService.setToken(user.token)
+              loginContext.setLoggedInUser( {username: user.username, id: user.id} )
+              navigate('/')
+            } catch (error) {
+              console.error(error)
+            }
           }
     }
 
@@ -28,7 +45,6 @@ export default function Signup() {
         <label htmlFor="username">Username</label>
         <input id="username" value={username} onChange={({ target }) => 
             {
-                console.log(username)
                 setUsername(target.value)
             } 
         }/>

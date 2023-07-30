@@ -8,20 +8,16 @@ import { LoginContext } from "../components/ContextProvider"
 export default function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    //const [loggedInUser, setLoggedInUser] = useState('')
 
     const loginContext = useContext(LoginContext)
-    console.log(loginContext)
     const navigate = useNavigate()
 
     const loginUser = async (event) => {
-        console.log(username)
         event.preventDefault()
         const userObject = {
           username: username,
           password: password,
         }
-
         console.log(userObject)
     
         try {
@@ -30,9 +26,7 @@ export default function Login() {
               entriesService.setToken(user.token)
               loginContext.setLoggedInUser( {username: user.username, id: user.id} )
               navigate('/')
-          }
-            console.log(user)
-            // console.log(document.cookie, 'cookie')
+            }
           } catch (error) {
             console.error(error)
           }
@@ -45,7 +39,6 @@ export default function Login() {
             <input id="username" spellCheck="false" autoCapitalize="none" autoComplete="off"
             type="text" value={username} onChange={({ target }) => 
                 {
-                    console.log(username)
                     setUsername(target.value.trim())
                 } 
             }/>

@@ -3,3 +3,4 @@
 ### TODO: Refresh token
 ### TODO: Login after sign up
 ### TODO: Timestamps
+### TODO: Delete cookie and logout when user deletes account
