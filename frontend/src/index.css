@@ -22,23 +22,20 @@ body {
   align-items: start;
 }
 
-.header-link:hover{
-  text-decoration: underline;
-}
-
-.header-main > h1 {
+.header-title {
   margin: 0;
+  margin-top:1.2em;
 }
 
 .header-link {
   text-decoration: none;
   color: black;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
 }
 
 .header-main > h2 {
   color: gray;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   margin-top: 0;
 }
 
@@ -47,7 +44,7 @@ body {
   min-width: 30%;
   align-items: start;
   justify-content: end;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .header-login > a {
@@ -66,7 +63,7 @@ a:link {
   background: none;
   cursor: pointer;
   color: #069;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   align-self: center;
 }
 
@@ -75,8 +72,15 @@ a:link {
 }
 
 .form {
+  font-size: 1.3rem;
   margin: 0px 0px;
   display: grid;
+}
+
+.form > p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: gray;
 }
 
 #post-title, #post-body, button {
@@ -99,12 +103,6 @@ a:link {
   color: whitesmoke;
   font-size: 1rem;
   border: none;
-}
-
-.form > p {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: gray;
 }
 
 .signup-form {
@@ -332,12 +330,20 @@ flex-direction: column;
     margin-bottom: 0;
   }
 
+  .header-title {
+    margin: 0;
+  }
+
   .header-link {
     text-decoration: none;
     color: black;
     font-size: 2.5rem;
   }
 
+  .header-link:hover{
+    text-decoration: underline;
+  }
+  
   .posts-container {
     /* display: flex; */
     display: grid;
