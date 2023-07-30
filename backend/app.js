@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 const entriesRouter = require('./controllers/entries')
 const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
+const logoutRouter = require('./controllers/logout')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -33,6 +34,7 @@ app.use(middleware.requestLogger)
 app.use('/api/entries', entriesRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/signup', usersRouter)
+app.use('/api/logout', logoutRouter)
 // catch reloads from routes other than '/'
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

@@ -2,6 +2,7 @@ import React from "react"
 import { useContext } from 'react'
 import { Link, useLocation } from "react-router-dom"
 import { LoginContext, EditModalContext } from "./ContextProvider"
+import logoutService from '../services/logoutService'
 
 const Header = ({ editModal }) => {
   const loginContext = useContext(LoginContext)
@@ -15,6 +16,11 @@ const Header = ({ editModal }) => {
     '/account': 'Account'
   }
 
+  const logoutUser = () => {
+    loginContext.setLoggedInUser(null)
+    logoutService.logout()
+  }
+
   return (
     <header onClick={editModalContext.closeModal}>
       <nav className={`header-container ${editModalContext.editModal ?
@@ -25,7 +31,7 @@ const Header = ({ editModal }) => {
         </div>
         <div className='header-login'>
           {loginContext?.loggedInUser ? 
-            <button id="logout-btn" onClick={() => loginContext.setLoggedInUser(null)}>Logout</button>
+            <button id="logout-btn" onClick={logoutUser}>Logout</button>
           :
             <Link to="/login">
               { loginContext?.loggedInUser ? 'Logout' : 'Log In' } 

@@ -20,6 +20,7 @@ export default function Home() {
         async function tryToLoginWithCookie() {
             try {
                 const user = await loginService.loginWithCookie()
+                console.log('about to try logging in', user)
                 if (user) {
                   entriesService.setToken(user.token)
                   loginContext.setLoggedInUser( {username: user.username, id: user.id} )
@@ -29,6 +30,7 @@ export default function Home() {
                     console.error(error)   
             }
         }
+        
         tryToLoginWithCookie()
 
         entriesService

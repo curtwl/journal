@@ -1,0 +1,20 @@
+import axios from 'axios'
+import Cookies from 'js-cookie'
+const baseURL = '/api/logout'
+
+const logout = async () => {
+  try {
+    const userCookie = Cookies.get('userCookie')
+
+    const config = {
+      headers: { 'userCookie': userCookie }
+    }
+
+    const response = await axios.post(baseURL, config)
+    return response.data
+    } catch (error) {
+    console.log(error)
+  }
+}
+
+export default { logout }
