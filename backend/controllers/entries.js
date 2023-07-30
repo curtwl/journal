@@ -19,7 +19,7 @@ entriesRouter.get('/', async (request, response) => {
         response.json(entries)
         // can remove after cookie deletion added
       } else {
-        const entries = await Entry.find({}).populate('author', 'username')
+        const entries = await Entry.find({public: true}).populate('author', 'username')
         response.json(entries)
       }
     } else {
