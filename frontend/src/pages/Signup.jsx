@@ -1,7 +1,8 @@
 import React from "react"
 import { useState, useContext } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
-import { LoginContext } from "../components/ContextProvider"
+import { LoginContext, NotificationContext } from "../components/ContextProvider"
+import Notification from "../components/Notification"
 import signupService from '../services/signupService'
 import loginService from '../services/loginService'
 import entriesService from '../services/entriesService'
@@ -11,6 +12,7 @@ export default function Signup() {
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
     const loginContext = useContext(LoginContext)
+    const { showSuccess, showError, clearNotification, notificationMessage } = useContext(NotificationContext)
 
     const addUser = async (event) => {
         console.log(username)
@@ -23,11 +25,13 @@ export default function Signup() {
         let user = null
         try {
             user = await signupService.signup(userObject)
+            showSuccess(`Welcome to Chingu Journal, ${username}!`)
           } catch (error) {
-            // error notification
+            showError('Please try again')
             console.error(error)
           }
-  
+          setTimeout(() => clearNotification(), 3000)
+
         if (user) {
           try {
               const newUser = await loginService.login(userObject)
@@ -41,18 +45,21 @@ export default function Signup() {
     }
 
     return (
-      <form className='signup-form' onSubmit={addUser}>
-        <label htmlFor="username">Username</label>
-        <input id="username" value={username} onChange={({ target }) => 
-            {
-                setUsername(target.value)
-            } 
-        }/>
-        
-        <label htmlFor="password">Password:</label>
-        <input id="password" value={password} onChange={({ target }) => setPassword(target.value)} />
-        <p>Sign up to create journals!</p>
-        <button type='submit'>Submit</button>
-      </form>
+      <>
+        <form className='signup-form' onSubmit={addUser}>
+          <label htmlFor="username">Username</label>
+          <input id="username" value={username} onChange={({ target }) => 
+              {
+                  setUsername(target.value)
+              } 
+          }/>
+          
+          <label htmlFor="password">Password:</label>
+          <input id="password" value={password} onChange={({ target }) => setPassword(target.value)} />
+          <p>Sign up to create journals!</p>
+          <button type='submit'>Submit</button>
+        </form>
+      {notificationMessage.message && <Notification />}
+      </>
     )
 }
