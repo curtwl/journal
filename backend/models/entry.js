@@ -7,6 +7,7 @@ const entrySchema = new mongoose.Schema({
     required: true,
     minlength: 1
   },
+  public: Boolean,
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

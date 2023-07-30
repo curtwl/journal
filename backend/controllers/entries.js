@@ -23,7 +23,7 @@ entriesRouter.get('/', async (request, response) => {
         response.json(entries)
       }
     } else {
-      const entries = await Entry.find({}).populate('author', 'username')
+      const entries = await Entry.find({public: true}).populate('author', 'username')
       response.json(entries)
     }
 })
