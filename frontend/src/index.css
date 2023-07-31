@@ -123,19 +123,11 @@ a:link {
 }
 
 .posts-container {
-  /* display: flex; */
   display: grid;
   grid-gap: 20px;
-  /* grid-row-start: 1;
-  grid-row-end: 4;
-  grid-column-start: 1;
-  grid-column-end: 4; */
-  /* grid-template-columns: 31% 31% 31%; */
-  grid-template-columns: auto;
-  /* grid-template-rows: 200px 100px 100px; */
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
   grid-template-rows: auto;
   position: relative;
-  opacity: 1;
 }
 
 .posts-container-element {
@@ -364,18 +356,7 @@ flex-direction: column;
   }
   
   .posts-container {
-    /* display: flex; */
-    display: grid;
-    grid-gap: 20px;
-    /* grid-row-start: 1;
-    grid-row-end: 4;
-    grid-column-start: 1;
-    grid-column-end: 4; */
-    /* grid-template-columns: 31% 31% 31%; */
     grid-template-columns: repeat(3, 1fr);
-    /* grid-template-rows: 200px 100px 100px; */
-    grid-template-rows: auto;
-    
   }
 
   .signup-form {
