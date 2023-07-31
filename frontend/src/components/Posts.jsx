@@ -41,7 +41,7 @@ const Posts = ({journalEntries, setJournalEntries}) => {
 
   const reversedEntries = [...journalEntries].reverse()
   const postsHTML = reversedEntries.map((entry) => (
-    <div className={`posts-container-element ${editModalContext.editModal ?
+    <article className={`posts-container-element ${editModalContext.editModal ?
                     'semi-transparent' : ''}`} key={entry.id} >
       <div className="title">{entry.title}</div>
       <div className="content">{entry.content}</div>
@@ -49,7 +49,7 @@ const Posts = ({journalEntries, setJournalEntries}) => {
         <button className="edit" type='submit' onClick={() => editEntryHandler(entry)}>Edit</button> 
         <button className="delete" type='submit' onClick={() => deleteEntryHandler(entry)}>Delete</button>
       </div>
-    </div>
+    </article>
   ))
 
   console.log(entryToEdit)

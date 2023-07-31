@@ -43,9 +43,9 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
     return (
       <div className="edit-modal">
         <div className="edit-modal-header">
-          <div className="modal-close-btn-container">
+          {/* <div className="modal-close-btn-container"> */}
           <button className="modal-close-btn" onClick={editModalContext.closeModal}>X</button>
-          </div>
+          {/* </div> */}
             <h2>Edit your journal entry</h2>
         </div>
         <form className='edit-form' onSubmit={editEntry}>
