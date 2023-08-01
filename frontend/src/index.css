@@ -380,7 +380,7 @@ flex-direction: column;
     Media Queries
    ================= */
 
-@media (min-width: 768px) {
+@media (min-width: 920px) {
   body {
     padding: 2rem;
     margin: 8;
@@ -516,7 +516,7 @@ flex-direction: column;
   }
 }
 
-@media (orientation: landscape) and (max-width: 900px) {
+@media (orientation: landscape) and (max-width: 920px) {
   .edit-modal {
     /* width: 80%;
     height: 90vh;
