@@ -50,12 +50,10 @@ export default function Home() {
           />
         </section>
         <section>
-          <div className="relative">
           <Posts 
             journalEntries={journalEntries}
             setJournalEntries={setJournalEntries}
           />
-          </div>
         </section>
         {notificationMessage.message && <Notification />}
       </main>

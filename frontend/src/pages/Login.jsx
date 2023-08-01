@@ -38,24 +38,23 @@ export default function Login() {
     }
 
     return (
-        <>
-          <form className='signup-form' onSubmit={loginUser}>
-              <label htmlFor="username">Username</label>
-              <input id="username" spellCheck="false" autoCapitalize="none" autoComplete="off"
-              type="text" value={username} onChange={({ target }) => 
+        <div className="signup-form-container">
+          <form className="signup-form" onSubmit={loginUser}>
+            <p><strong>Login</strong> to create journals!</p>
+            <label htmlFor="username">Username</label>
+            <input id="username" spellCheck="false" autoCapitalize="none" autoComplete="off"
+                   type="text" value={username} onChange={({ target }) => 
                   {
                       setUsername(target.value.trim())
                   } 
-              }/>
+            }/>
               
-              <label htmlFor="password">Password:</label>
-              <input id="password" spellCheck="false" autoCapitalize="none" type="password"
-              value={password} onChange={({ target }) => setPassword(target.value)} />
-              <p>{ loginContext?.loggedInUser ? `Logged in! Welcome ${loginContext.loggedInUser.username}`
-                : 'Login to create journals!'}</p>
-              <button type='submit'>Submit</button>
+            <label htmlFor="password">Password:</label>
+            <input id="password" spellCheck="false" autoCapitalize="none" type="password"
+                   value={password} onChange={({ target }) => setPassword(target.value)} />
+            <button className='submit-btn' type='submit'>Login</button>
           </form>
           {notificationMessage.message && <Notification />}
-        </>
+        </div>
     )
 }

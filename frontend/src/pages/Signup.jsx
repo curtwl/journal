@@ -45,8 +45,9 @@ export default function Signup() {
     }
 
     return (
-      <>
+      <div className="signup-form-container">
         <form className='signup-form' onSubmit={addUser}>
+          <p><strong>Sign up</strong> to create journals!</p>
           <label htmlFor="username">Username</label>
           <input id="username" value={username} onChange={({ target }) => 
               {
@@ -56,10 +57,9 @@ export default function Signup() {
           
           <label htmlFor="password">Password:</label>
           <input id="password" value={password} onChange={({ target }) => setPassword(target.value)} />
-          <p>Sign up to create journals!</p>
-          <button type='submit'>Submit</button>
+          <button className='submit-btn' type='submit'>Sign Up</button>
         </form>
       {notificationMessage.message && <Notification />}
-      </>
+      </div>
     )
 }
