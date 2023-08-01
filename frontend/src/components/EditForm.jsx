@@ -42,13 +42,14 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
 
     return (
       <div className="edit-modal">
-        <button className="modal-close-btn" onClick={editModalContext.closeModal}>X</button>
-        <div className="edit-modal-container">
+        <div className="edit-modal-header">
+          <button className="modal-close-btn" onClick={editModalContext.closeModal}>X</button>
           {/* <div className="modal-close-btn-container"> */}
           {/* </div> */}
-          <h2 className="edit-modal-header">Edit your journal entry</h2>
-          <form className='edit-form' onSubmit={editEntry}>
-            <label htmlFor="edit-post-title">Title:</label>
+            <h2>Edit your journal entry</h2>
+        </div>
+        <form className='edit-form' onSubmit={editEntry}>
+            <label htmlFor="edit-post-title" className="title-label">Title:</label>
             <input 
               id="edit-post-title" 
               className='edit-post-title'
@@ -61,8 +62,7 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
               value={editedPostBody} 
               onChange={({ target }) => setEditedPostBody(target.value)} />
             <button className='edit-submit-btn' type='submit'>Submit</button>
-          </form>
-        </div>
+        </form>
       </div>
     )
 }
