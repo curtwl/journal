@@ -3,6 +3,7 @@ import entriesService from '../services/entriesService'
 import { EditModalContext, NotificationContext } from "./ContextProvider"
 
 const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostBody, setEditedPostBody, journalEntries, setJournalEntries, setNotificationMessage}) => {
+    console.log(editedPostBody)
     const editModalContext = useContext(EditModalContext)
     const { showSuccess, showError, clearNotification } = useContext(NotificationContext)
 
@@ -13,6 +14,7 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
           title: editedPostTitle,
           content: editedPostBody
         }
+        console.log(editedEntry)
     
         try {
           const res = await entriesService.updateEntry(entryToEdit.id, editedEntry)
@@ -25,6 +27,10 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
           showError("Could not edit")
         }
         setTimeout(() => clearNotification(), 3000)
+        
+        const editModalTimeout = setTimeout(() => {
+          editModalContext.closeModal()
+        }, 500)
     }
 
     return (

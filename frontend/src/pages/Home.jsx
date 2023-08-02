@@ -19,11 +19,9 @@ export default function Home() {
         async function tryToLoginWithCookie() {
             try {
                 const user = await loginService.loginWithCookie()
-                console.log('about to try logging in', user)
                 if (user) {
                   entriesService.setToken(user.token)
                   loginContext.setLoggedInUser( {username: user.username, id: user.id} )
-                  console.log(user)
                 } 
                 } catch (error) {
                     console.error(error)   
