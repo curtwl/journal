@@ -7,7 +7,7 @@ const Notification = () => {
   useEffect(() => {
     setTimeout(() => clearNotification, 3000)
   }, [])
-  console.log(notificationMessage)
+
     if (notificationMessage.message === '') {
       return null
     }

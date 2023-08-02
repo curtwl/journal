@@ -6,7 +6,6 @@ let token = null
 
 const setToken = (newToken) => {
   token = `Bearer ${newToken}`
-  console.log(token)
 }
 
 const getAllEntries = async () => {
@@ -18,7 +17,6 @@ const getAllEntries = async () => {
     }
     
     const response = await axios.get(baseURL)
-    console.log(response.data)
     return response.data
   }
   catch (error) {

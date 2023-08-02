@@ -3,8 +3,6 @@ import Cookies from 'js-cookie'
 const baseURL = '/api/login'
 
 const login = async (userObject=null) => {
-  console.log(userObject, 'userObject')
-
     try {
       const response = await axios.post(baseURL, userObject)
       return response.data

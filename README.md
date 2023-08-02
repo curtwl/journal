@@ -28,6 +28,11 @@ npm i && npm start
 cd ../backend
 npm i && npm run dev
 ```
+5. Deploy
+```
+cd backend
+npm run deploy:full
+```
 ## Dependencies
 ### Frontend
 * React

@@ -3,7 +3,6 @@ const baseURL = '/api/signup'
 import Cookies from 'js-cookie'
 
 const signup = async (userObject) => {
-  console.log(userObject, 'userObject')
   const response = await axios.post(baseURL, userObject)
   return response.data
 }

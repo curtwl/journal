@@ -3,7 +3,6 @@ import entriesService from '../services/entriesService'
 import { EditModalContext, NotificationContext } from "./ContextProvider"
 
 const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostBody, setEditedPostBody, journalEntries, setJournalEntries, setNotificationMessage}) => {
-    console.log(editedPostBody)
     const editModalContext = useContext(EditModalContext)
     const { showSuccess, showError, clearNotification } = useContext(NotificationContext)
 
@@ -14,7 +13,6 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
           title: editedPostTitle,
           content: editedPostBody
         }
-        console.log(editedEntry)
     
         try {
           const res = await entriesService.updateEntry(entryToEdit.id, editedEntry)

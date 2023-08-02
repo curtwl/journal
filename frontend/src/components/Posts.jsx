@@ -15,15 +15,13 @@ const Posts = ({journalEntries, setJournalEntries}) => {
     setEntryToEdit(entry)
     setEditedPostTitle(entry.title)
     setEditedPostBody(entry.content)
-    console.log(entry)
     editModalContext.setEditModal(true)
   }
 
   const deleteEntryHandler = async (entry) => {
     try {
       if (window.confirm("Are you sure you want to delete this entry?")) {
-        const noteToDelete = await entriesService.deleteEntry(entry.id)
-        console.log(noteToDelete)
+        await entriesService.deleteEntry(entry.id)
         showSuccess("Journal entry deleted successfully")
         setTimeout(() => clearNotification(), 3500)
         setJournalEntries(journalEntries.filter((e) => e.id !== entry.id))
@@ -52,7 +50,6 @@ const Posts = ({journalEntries, setJournalEntries}) => {
     </article>
   ))
 
-  console.log(entryToEdit)
   return (
     <>
     <div className={`posts-container ${editModalContext.editModal ? 'semi-transparent' : ''}`}>

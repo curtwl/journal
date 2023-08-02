@@ -19,7 +19,7 @@ export default function Account() {
         logoutService.logout()
         navigate('/')
     }
-    console.log(loginContext.loggedInUser)
+    
     return (
         <div>
             <h4>Change Account Settings for {loginContext.loggedInUser?.username}:</h4>

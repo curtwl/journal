@@ -15,7 +15,6 @@ const Form = ({journalEntries, setJournalEntries}) => {
       title: postTitle,
       content: postBody
     }
-    console.log(newEntry)
 
     try {
       const res = await entriesService.createEntry(newEntry)
@@ -30,7 +29,6 @@ const Form = ({journalEntries, setJournalEntries}) => {
 
     setPostTitle('')
     setPostBody('')
-    console.log(journalEntries)
   }
 
   return (

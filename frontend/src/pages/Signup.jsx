@@ -15,7 +15,6 @@ export default function Signup() {
     const { showSuccess, showError, clearNotification, notificationMessage } = useContext(NotificationContext)
 
     const addUser = async (event) => {
-        console.log(username)
         event.preventDefault()
         const userObject = {
           username: username,

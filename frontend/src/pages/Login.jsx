@@ -20,7 +20,6 @@ export default function Login() {
           username: username,
           password: password,
         }
-        console.log(userObject)
     
         try {
             const user = await loginService.login(userObject)

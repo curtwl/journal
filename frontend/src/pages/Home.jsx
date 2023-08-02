@@ -13,7 +13,6 @@ export default function Home() {
     const { notificationMessage } = useContext(NotificationContext)
 
     const loginContext = useContext(LoginContext)
-    console.log(loginContext)
   
     // if user has a cookie, log them in on first render. TODO: refresh token
     useEffect(() => {
@@ -30,7 +29,6 @@ export default function Home() {
                     console.error(error)   
             }
         }
-        
         tryToLoginWithCookie()
 
         entriesService
