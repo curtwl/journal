@@ -380,7 +380,7 @@ flex-direction: column;
     Media Queries
    ================= */
 
-@media (min-width: 920px) {
+@media (min-width: 768px) {
   body {
     padding: 2rem;
     margin: 8;

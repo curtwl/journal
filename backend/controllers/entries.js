@@ -84,6 +84,14 @@ entriesRouter.delete('/:id', async (request, response, next) => {
 })
 
 entriesRouter.put('/:id', (request, response, next) => {
+  const token = request.cookies.userCookie;
+  try {
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+  } catch (error) {
+    console.log('Invalid token')
+    return response.status(401).json({ error: 'Invalid token' })
+  }
+  
   const body = request.body
 
   const entry = {

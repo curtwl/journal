@@ -19,26 +19,15 @@ const EditForm = ({entryToEdit, editedPostTitle, setEditedPostTitle, editedPostB
         try {
           const res = await entriesService.updateEntry(entryToEdit.id, editedEntry)
           setJournalEntries(journalEntries.map(e => e.id === entryToEdit.id ? res : e))
+          showSuccess("Your journal has been updated!")
+          setEditedPostTitle('')
+          setEditedPostBody('')
         } catch (error) {
           console.error(error)
           showError("Could not edit")
-          setTimeout(() => clearNotification(), 3000)
         }
-    
-        setEditedPostTitle('')
-        setEditedPostBody('')
-        showSuccess("Your journal has been updated!")
-        
-        const editModalTimeout = setTimeout(() => {
-          editModalContext.closeModal()
-        }, 500)
-
-        setTimeout(() => {
-          clearNotification()
-          clearTimeout(editModalTimeout)
-        }, 3000)
-        console.log(journalEntries)
-      }
+        setTimeout(() => clearNotification(), 3000)
+    }
 
     return (
       <div className="edit-modal">
