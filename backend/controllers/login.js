@@ -24,18 +24,18 @@ const loginWithPassword = async (request, response) => {
   const accessToken = jwt.sign(
       userForToken,
       process.env.SECRET,
-      { expiresIn: 60*60 }
+      { expiresIn: 6 }
   )
 
   const refreshToken = jwt.sign(
     userForToken,
-    process.env.SECRET,
+    process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "7d" }
   )
 
   response
       .status(200)
-      .cookie("userCookie", accessToken, { httpOnly: true })
+      .cookie("userCookie", refreshToken, { httpOnly: true })
       .send({ accessToken, username: user.username, })
 }
 

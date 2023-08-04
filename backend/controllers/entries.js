@@ -2,6 +2,7 @@ const entriesRouter = require('express').Router()
 const Entry = require('../models/entry')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+//const { getAccessToken } = require('./refresh')
 
 const requireToken = (request, response) => {
   const token = request.cookies.userCookie
@@ -10,7 +11,7 @@ const requireToken = (request, response) => {
   try {
     return decodedToken = jwt.verify(token, process.env.SECRET)
   } catch (error) {
-    return response.status(401).json({ error: 'Invalid token' })
+    return response.status(403).json({ error: 'Invalid credentials' })
   }
 }
 
@@ -31,9 +32,11 @@ entriesRouter.get('/', async (request, response) => {
         decodedToken = jwt.verify(token, process.env.SECRET)
        } catch {
         // TODO: refesh token
-        response
-        .cookie('userCookie', '', { expires: new Date(0) }, { httpOnly: true })
-        showPublicEntries(request, response)
+        // response
+        //   .status(401).json(({ error: 'Expired token' }))
+        //.cookie('userCookie', '', { expires: new Date(0) }, { httpOnly: true })
+        // .clearCookie('userCookie', { httpOnly: true })
+          //showPublicEntries(request, response)
           console.log("catch jwt expired")
        }
       if (decodedToken?.id) {

@@ -2,8 +2,8 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 const baseURL = '/api/entries'
-let token = null
 
+let token = null
 const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }

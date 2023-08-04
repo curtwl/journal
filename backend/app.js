@@ -9,6 +9,7 @@ const entriesRouter = require('./controllers/entries')
 const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
 const logoutRouter = require('./controllers/logout')
+const refreshRouter = require('./controllers/refresh')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -35,6 +36,7 @@ app.use('/api/entries', entriesRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/signup', usersRouter)
 app.use('/api/logout', logoutRouter)
+app.use('/api/refresh', refreshRouter)
 // catch reloads from routes other than '/'
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
