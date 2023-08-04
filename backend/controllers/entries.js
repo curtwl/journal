@@ -28,9 +28,12 @@ entriesRouter.get('/', async (request, response) => {
         response.json(entries)
       }
     } else {
-      const entries = await Entry.find({public: true})
-      console.log(entries)
-      response.json(entries)
+      try {
+        const entries = await Entry.find({public: true})
+        response.json(entries)
+      } catch (error) {
+        response.status(500).json({ error: 'An error occurred while fetching public entries' })
+      }
     }
 })
 
