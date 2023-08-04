@@ -21,16 +21,22 @@ const loginWithPassword = async (request, response) => {
       id: user._id,
   }
 
-  const token = jwt.sign(
+  const accessToken = jwt.sign(
       userForToken,
       process.env.SECRET,
       { expiresIn: 60*60 }
   )
 
+  const refreshToken = jwt.sign(
+    userForToken,
+    process.env.SECRET,
+    { expiresIn: "7d" }
+  )
+
   response
       .status(200)
-      .cookie("userCookie", token, { httpOnly: true })
-      .send({ token, username: user.username, })
+      .cookie("userCookie", accessToken, { httpOnly: true })
+      .send({ accessToken, username: user.username, })
 }
 
 loginRouter.post('/', async (request, response) => {
@@ -43,10 +49,13 @@ loginRouter.post('/', async (request, response) => {
         const decodedToken = jwt.verify(tokenFromCookie, process.env.SECRET)
         const user = await User.findById(decodedToken.id) 
         if (user) {
+          console.log('valid')
           response
             .status(200)
             .send({ tokenFromCookie, username: decodedToken.username, id: decodedToken.id })
         } else {
+          console.log('clear cookie')
+          response.clearCookie("token")
           response.status(401).json({ error: 'Invalid token' })
         }
   } else 

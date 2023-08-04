@@ -14,6 +14,15 @@ const requireToken = (request, response) => {
   }
 }
 
+const showPublicEntries = async (request, response) => {
+  try {
+    const entries = await Entry.find({public: true})
+    response.json(entries)
+  } catch (error) {
+    response.status(500).json({ error: 'An error occurred while fetching public entries' })
+  }
+}
+
 entriesRouter.get('/', async (request, response) => { 
     const token = request.cookies.userCookie
     if (token) {
@@ -21,19 +30,18 @@ entriesRouter.get('/', async (request, response) => {
        try {
         decodedToken = jwt.verify(token, process.env.SECRET)
        } catch {
-        console.log("catch jwt expired")
+        // TODO: refesh token
+        response
+        .cookie('userCookie', '', { expires: new Date(0) }, { httpOnly: true })
+        showPublicEntries(request, response)
+          console.log("catch jwt expired")
        }
       if (decodedToken?.id) {
         const entries = await Entry.find({author: decodedToken.id})
         response.json(entries)
       }
     } else {
-      try {
-        const entries = await Entry.find({public: true})
-        response.json(entries)
-      } catch (error) {
-        response.status(500).json({ error: 'An error occurred while fetching public entries' })
-      }
+      showPublicEntries(request, response)
     }
 })
 
