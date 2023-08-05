@@ -14,27 +14,43 @@ export default function Home() {
 
     const loginContext = useContext(LoginContext)
   
-    // if user has a cookie, log them in on first render. TODO: refresh token
+    // if user has a refresh cookie, try to log in with access token
     useEffect(() => {
-        async function tryToLoginWithToken() {
-            try {
-                const user = await loginService.loginWithCookie()
-                if (user) {
-                  entriesService.setToken(user.token)
-                  loginContext.setLoggedInUser( {username: user.username, id: user.id} )
-                } 
-                } catch (error) {
-                    console.error(error)   
-            }
-        }
-        tryToLoginWithToken()
+      async function tryToRefreshToken() {
+        try {
+          const token = await loginService.refreshTokenAndLogin()
+          if (token) {
+            console.log(token, 'access token')
+            entriesService.setToken(token[0])
+            loginContext.setLoggedInUser( {username: token[1].username, id: token[1].id} )
+            console.log(loginContext.loggedInUser)
+          } 
+          } catch (error) {
+            console.error(error)   
+          }
+      }
 
-        entriesService
-        .getAllEntries()
-        .then(intialEntries => {
+      async function loadEntries() {
+        try {
+          const intialEntries = await entriesService.getAllEntries()
           setJournalEntries(intialEntries)
-        })
-        .catch(error => console.log(error))
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      
+      if (!loginContext.loggedInUser) {
+        console.log('not logged in')
+        tryToRefreshToken().then(() => {
+          loadEntries()
+        }
+      )} else {
+        tryToRefreshToken().then(() => {
+          loadEntries()})
+      }
+        
+        console.log(loginContext.loggedInUser)
+        //loadEntries()
     }, [])
 
     return (

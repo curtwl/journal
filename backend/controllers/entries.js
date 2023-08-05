@@ -25,19 +25,22 @@ const showPublicEntries = async (request, response) => {
 }
 
 entriesRouter.get('/', async (request, response) => { 
-    const token = request.cookies.userCookie
+    const token = request.headers.authorization?.split(' ')[1]
+    console.log(token, 'token from entries.js')
+    console.log(request.headers, 'headers from entries.js')
     if (token) {
       let decodedToken = null
        try {
-        decodedToken = jwt.verify(token, process.env.SECRET)
-       } catch {
+        decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+        console.log(decodedToken, 'dectok')
+       } catch (error) {
         // TODO: refesh token
-        // response
-        //   .status(401).json(({ error: 'Expired token' }))
+        console.log(error, "catch jwt expired")
+        response
+          .status(401).json(({ error: 'Expired token' }))
         //.cookie('userCookie', '', { expires: new Date(0) }, { httpOnly: true })
         // .clearCookie('userCookie', { httpOnly: true })
           //showPublicEntries(request, response)
-          console.log("catch jwt expired")
        }
       if (decodedToken?.id) {
         const entries = await Entry.find({author: decodedToken.id})

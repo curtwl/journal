@@ -22,9 +22,12 @@ const loginWithPassword = async (request, response) => {
   }
 
   const accessToken = jwt.sign(
-      userForToken,
-      process.env.SECRET,
-      { expiresIn: 6 }
+    {
+      username: user.username,
+      id: user._id,
+    }, 
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: '1m' }
   )
 
   const refreshToken = jwt.sign(
@@ -41,7 +44,7 @@ const loginWithPassword = async (request, response) => {
 
 loginRouter.post('/', async (request, response) => {
   const tokenFromCookie = request.cookies.userCookie
-  console.log(tokenFromCookie)
+  console.log(tokenFromCookie, 'login token')
   
   if (request.body.password)
     loginWithPassword(request, response)

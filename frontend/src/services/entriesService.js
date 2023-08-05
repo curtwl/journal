@@ -1,25 +1,42 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
-
+import loginService from './loginService'
 const baseURL = '/api/entries'
 
 let token = null
 const setToken = (newToken) => {
+  console.log(newToken)
   token = `Bearer ${newToken}`
 }
 
 const getAllEntries = async () => {
+  console.log(token)
   try {
-    const userCookie = Cookies.get('userCookie')
-
     const config = {
-      headers: { 'userCookie': userCookie }
+      headers: { Authorization: token },
     }
     
-    const response = await axios.get(baseURL)
+    const response = await axios.get(baseURL, config)
+    console.log(response.data)
     return response.data
   }
   catch (error) {
+    console.log(token)
+    
+    try {
+      const test = await loginService.refreshTokenAndLogin()
+      const newToken = setToken(test[0])
+      console.log(test)
+      const config = {
+        headers: { Authorization: newToken },
+      }
+      
+      console.log(newToken)
+      const response = await axios.get(baseURL, config)
+      console.log(response.data)
+      return response.data
+    }
+    catch (error) {
     if (error.response) {
       console.log(error.response.data)
       console.log(error.response.status)
@@ -30,7 +47,7 @@ const getAllEntries = async () => {
       console.log('Error', error.message)
     }
   }
-}
+}}
 
 const createEntry = async (newEntry) => {
   const userCookie = Cookies.get('userCookie')

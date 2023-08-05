@@ -5,23 +5,25 @@ const User = require('../models/user')
 
 refreshRouter.get('/', async (request, response) => {
     const tokenFromCookie = request.cookies?.userCookie
-    console.log(tokenFromCookie)
+    console.log(tokenFromCookie, 'refresh cookie')
     if (!tokenFromCookie)
-      return res.status(401).json({ error: 'Unauthorized' })
+    return response.status(401).json({ error: 'Unauthorized' })
     
     const decodedToken = jwt.verify(tokenFromCookie, process.env.REFRESH_TOKEN_SECRET)
+    console.log(decodedToken, 'decodedToken')
+    
     if (!decodedToken)
-      return res.status(401).json({ error: 'Unauthorized' })
+      return response.status(401).json({ error: 'Unauthorized' })
 
     const accessToken = jwt.sign(
       {
         username: decodedToken.username,
-        id: decodedToken._id,
+        id: decodedToken.id,
       }, 
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: 20 }
+      { expiresIn: '10m' }
     )
-
+console.log(accessToken, 'access token from refresh.js')
     response.json({ accessToken })
 })
 
