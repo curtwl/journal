@@ -49,7 +49,7 @@ loginRouter.post('/', async (request, response) => {
   if (request.body.password)
     loginWithPassword(request, response)
   else if (tokenFromCookie) {
-        const decodedToken = jwt.verify(tokenFromCookie, process.env.SECRET)
+        const decodedToken = jwt.verify(tokenFromCookie, process.env.ACCESS_TOKEN_SECRET)
         const user = await User.findById(decodedToken.id) 
         if (user) {
           console.log('valid')

@@ -33,8 +33,9 @@ export default function Signup() {
 
         if (user) {
           try {
-              const newUser = await loginService.login(userObject)
-              entriesService.setToken(user.token)
+              const token = await loginService.login(userObject)
+              console.log(token)
+              entriesService.setToken(token.accessToken)
               loginContext.setLoggedInUser( {username: user.username, id: user.id} )
               navigate('/')
             } catch (error) {

@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken')
 //const { getAccessToken } = require('./refresh')
 
 const requireToken = (request, response) => {
-  const token = request.cookies.userCookie
+  const token = request.headers.authorization?.split(' ')[1]
   let decodedToken = null
 
   try {
-    return decodedToken = jwt.verify(token, process.env.SECRET)
+    return decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
   } catch (error) {
     return response.status(403).json({ error: 'Invalid credentials' })
   }
@@ -65,9 +65,9 @@ entriesRouter.get('/:id', async (request, response) => {
 
 entriesRouter.post('/', async (request, response) => {
   const body = request.body
-  const token = request.cookies.userCookie
+  const token = request.headers.authorization?.split(' ')[1]
   console.log(token)
-  const decodedToken = jwt.verify(token, process.env.SECRET)
+  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'Invalid token' })
@@ -90,8 +90,8 @@ entriesRouter.post('/', async (request, response) => {
 
 entriesRouter.delete('/:id', async (request, response) => {
     const decodedToken = requireToken(request, response)
-
-    await Entry.findByIdAndRemove(decodedToken.id)
+console.log(decodedToken.id)
+    await Entry.findByIdAndRemove(request.params.id)
     response.status(204).end()
 })
 

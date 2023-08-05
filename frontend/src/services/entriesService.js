@@ -8,19 +8,19 @@ const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }
 
-const isJWTExpired = (token) => {
-  // console.log(token, 'isjwtexpired')
+const isJWTExpired = async (token) => {
+  console.log(token, 'isjwtexpired')
   token = token.split(' ')[1]
   const jwtPayload = JSON.parse(window.atob(token?.split('.')[1]))
-  return Date.now() >= jwtPayload.exp * 1000;
+  if (Date.now() >= jwtPayload.exp * 1000) {
+    const newToken = await loginService.refreshTokenAndLogin()
+    setToken(newToken[0])
+  }
 }
 
 const getAllEntries = async () => {
   // console.log(token)
-  if (isJWTExpired(token)) {
-    const test = await loginService.refreshTokenAndLogin()
-    setToken(test[0])
-  }
+  await (isJWTExpired(token))
   try {
     const config = {
       headers: { Authorization: token },
@@ -61,6 +61,7 @@ const getAllEntries = async () => {
 
 const createEntry = async (newEntry) => {
   console.log(token)
+  await (isJWTExpired(token))
   const config = {
     headers: { Authorization: token },
   }
@@ -71,16 +72,18 @@ const createEntry = async (newEntry) => {
 }
 
 const updateEntry = async (id, updatedEntry) => {
-  const userCookie = Cookies.get('userCookie')
+  await (isJWTExpired(token))
 
   const config = {
-    'userCookie': userCookie
+    headers: { Authorization: token },
   }
   const response = await axios.put(`${baseURL}/${id}`, updatedEntry, config)
   return response.data
 }
 
 const deleteEntry = async (id) => {
+  await (isJWTExpired(token))
+
   const config = {
     headers: { Authorization: token },
   }
