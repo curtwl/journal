@@ -5,35 +5,45 @@ const baseURL = '/api/entries'
 
 let token = null
 const setToken = (newToken) => {
-  console.log(newToken)
   token = `Bearer ${newToken}`
 }
 
+const isJWTExpired = (token) => {
+  // console.log(token, 'isjwtexpired')
+  token = token.split(' ')[1]
+  const jwtPayload = JSON.parse(window.atob(token?.split('.')[1]))
+  return Date.now() >= jwtPayload.exp * 1000;
+}
+
 const getAllEntries = async () => {
-  console.log(token)
+  // console.log(token)
+  if (isJWTExpired(token)) {
+    const test = await loginService.refreshTokenAndLogin()
+    setToken(test[0])
+  }
   try {
     const config = {
       headers: { Authorization: token },
     }
     
     const response = await axios.get(baseURL, config)
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
   }
   catch (error) {
-    console.log(token)
+    // console.log(token)
     
     try {
       const test = await loginService.refreshTokenAndLogin()
       const newToken = setToken(test[0])
-      console.log(test)
+      // console.log(test)
       const config = {
         headers: { Authorization: newToken },
       }
       
-      console.log(newToken)
+      // console.log(newToken)
       const response = await axios.get(baseURL, config)
-      console.log(response.data)
+      // console.log(response.data)
       return response.data
     }
     catch (error) {
@@ -50,10 +60,9 @@ const getAllEntries = async () => {
 }}
 
 const createEntry = async (newEntry) => {
-  const userCookie = Cookies.get('userCookie')
-
+  console.log(token)
   const config = {
-    'userCookie': userCookie
+    headers: { Authorization: token },
   }
 
   const response = await axios.post(baseURL, newEntry, config)

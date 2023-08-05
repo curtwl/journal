@@ -14,6 +14,10 @@ export default function Home() {
 
     const loginContext = useContext(LoginContext)
   
+    const checkJWTExpiry = (token) => {
+      const jwtPayload = JSON.parse(window.atob(JWT.split('.')[1]))
+      const isExpired = Date.now() >= jwtPayload.exp * 1000;
+    }
     // if user has a refresh cookie, try to log in with access token
     useEffect(() => {
       async function tryToRefreshToken() {
@@ -45,8 +49,8 @@ export default function Home() {
           loadEntries()
         }
       )} else {
-        tryToRefreshToken().then(() => {
-          loadEntries()})
+        
+          loadEntries()
       }
         
         console.log(loginContext.loggedInUser)

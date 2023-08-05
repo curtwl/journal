@@ -23,7 +23,7 @@ const login = async (userObject=null) => {
 const refreshTokenAndLogin = async () => {
   try {
     const userCookie = Cookies.get('userCookie')
-    console.log(userCookie, 'refresh cookie')
+
     const config = {
       headers: { 'userCookie': userCookie }
     }
