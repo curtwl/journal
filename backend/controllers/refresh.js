@@ -21,7 +21,7 @@ refreshRouter.get('/', async (request, response) => {
         id: decodedToken.id,
       }, 
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '10m' }
+      { expiresIn: '8s' }
     )
 console.log(accessToken, 'access token from refresh.js')
     response.json({ accessToken })
