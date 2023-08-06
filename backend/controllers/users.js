@@ -20,7 +20,6 @@ usersRouter.post('/', async (request, response) => {
   })
 
   const savedUser = await user.save()
-
   response.status(201).json(savedUser)
 })
 
@@ -32,7 +31,7 @@ usersRouter.delete('/:id', async (request, response, next) => {
       return response.status(401).json({ error: 'Invalid token' })
     }
     const deletedUser = await User.findByIdAndRemove(request.params.id)
-    console.log(deletedUser)
+
     response.status(204).end()
     return { success: true, message: 'Your account has been successfully deleted' }
 })

@@ -4,13 +4,13 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 const requireToken = (request, response) => {
-  const token = request.cookies.userCookie
+  const token = request.headers.authorization?.split(' ')[1]
   let decodedToken = null
 
   try {
-    return decodedToken = jwt.verify(token, process.env.SECRET)
+    return decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
   } catch (error) {
-    return response.status(401).json({ error: 'Invalid token' })
+    return response.status(403).json({ error: 'Invalid credentials' })
   }
 }
 
@@ -24,17 +24,15 @@ const showPublicEntries = async (request, response) => {
 }
 
 entriesRouter.get('/', async (request, response) => { 
-    const token = request.cookies.userCookie
+    const token = request.headers.authorization?.split(' ')[1]
+
     if (token) {
       let decodedToken = null
        try {
-        decodedToken = jwt.verify(token, process.env.SECRET)
-       } catch {
-        // TODO: refesh token
+        decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+       } catch (error) {
         response
-        .cookie('userCookie', '', { expires: new Date(0) }, { httpOnly: true })
-        showPublicEntries(request, response)
-          console.log("catch jwt expired")
+          .status(401).json(({ error: 'Expired token' }))
        }
       if (decodedToken?.id) {
         const entries = await Entry.find({author: decodedToken.id})
@@ -47,7 +45,6 @@ entriesRouter.get('/', async (request, response) => {
 
 entriesRouter.get('/:id', async (request, response) => {
   const decodedToken = requireToken(request, response)
-
   const entry = await Entry.findById(request.params.id)
 
   if (entry.author.toString() === decodedToken.id) {
@@ -59,16 +56,14 @@ entriesRouter.get('/:id', async (request, response) => {
 
 entriesRouter.post('/', async (request, response) => {
   const body = request.body
-  const token = request.cookies.userCookie
-  console.log(token)
-  const decodedToken = jwt.verify(token, process.env.SECRET)
+  const token = request.headers.authorization?.split(' ')[1]
+  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'Invalid token' })
   }
 
   const user = await User.findById(decodedToken.id)
-  console.log(user)
 
   const entry = new Entry({
     title: body.title,
@@ -85,7 +80,8 @@ entriesRouter.post('/', async (request, response) => {
 entriesRouter.delete('/:id', async (request, response) => {
     const decodedToken = requireToken(request, response)
 
-    await Entry.findByIdAndRemove(decodedToken.id)
+    // check if decodedToken.id === id of entry's author?
+    await Entry.findByIdAndRemove(request.params.id)
     response.status(204).end()
 })
 
@@ -98,8 +94,9 @@ entriesRouter.put('/:id', async (request, response) => {
     content: body.content,
   }
 
+  // should be before the if
   updatedEntry = await Entry.findByIdAndUpdate(request.params.id, entry, { new: true })
-  console.log(updatedEntry.author.toString() === decodedToken.id)
+  
   if (updatedEntry.author.toString() === decodedToken.id) {
     response.json(updatedEntry)
   } else {

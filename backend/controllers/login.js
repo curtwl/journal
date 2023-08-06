@@ -22,39 +22,39 @@ const loginWithPassword = async (request, response) => {
   }
 
   const accessToken = jwt.sign(
-      userForToken,
-      process.env.SECRET,
-      { expiresIn: 60*60 }
+    {
+      username: user.username,
+      id: user._id,
+    }, 
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: '8s' }
   )
 
   const refreshToken = jwt.sign(
     userForToken,
-    process.env.SECRET,
+    process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "7d" }
   )
 
   response
       .status(200)
-      .cookie("userCookie", accessToken, { httpOnly: true })
+      .cookie("userCookie", refreshToken, { httpOnly: true })
       .send({ accessToken, username: user.username, })
 }
 
 loginRouter.post('/', async (request, response) => {
   const tokenFromCookie = request.cookies.userCookie
-  console.log(tokenFromCookie)
   
   if (request.body.password)
     loginWithPassword(request, response)
   else if (tokenFromCookie) {
-        const decodedToken = jwt.verify(tokenFromCookie, process.env.SECRET)
+        const decodedToken = jwt.verify(tokenFromCookie, process.env.ACCESS_TOKEN_SECRET)
         const user = await User.findById(decodedToken.id) 
         if (user) {
-          console.log('valid')
           response
             .status(200)
             .send({ tokenFromCookie, username: decodedToken.username, id: decodedToken.id })
         } else {
-          console.log('clear cookie')
           response.clearCookie("token")
           response.status(401).json({ error: 'Invalid token' })
         }

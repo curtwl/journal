@@ -1,17 +1,23 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 const baseURL = '/api/login'
+import jwt_decode from "jwt-decode"
+
+let token = null
+const setToken = (newToken) => {
+  token = `Bearer ${newToken}`
+}
 
 const login = async (userObject=null) => {
     try {
       const response = await axios.post(baseURL, userObject)
       return response.data
     } catch (error) {
-    console.log(error)
+      console.log(error)
   }
 }
 
-const loginWithCookie = async () => {
+const refreshTokenAndLogin = async () => {
   try {
     const userCookie = Cookies.get('userCookie')
 
@@ -19,11 +25,13 @@ const loginWithCookie = async () => {
       headers: { 'userCookie': userCookie }
     }
 
-    const response = await axios.post(baseURL, config)
-    return response.data
+    const response = await axios.get('/api/refresh', config)
+
+    // get username and id from access token
+    const decodedTokenData = jwt_decode(response.data.accessToken)
+    return [response.data.accessToken, decodedTokenData]
   } catch (error) {
-    // need new access token
     console.log(error)
   }
 }
-export default { login, loginWithCookie }
+export default { login, refreshTokenAndLogin, setToken }
