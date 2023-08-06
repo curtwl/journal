@@ -1,7 +1,5 @@
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
 const refreshRouter = require('express').Router()
-const User = require('../models/user')
 
 refreshRouter.get('/', async (request, response) => {
     const tokenFromCookie = request.cookies?.userCookie

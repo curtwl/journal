@@ -25,7 +25,7 @@ describe('when a user with a valid cookie GETs entries', () => {
 
     await entry.save()
 
-    token = jwt.sign({ id: user._id }, process.env.SECRET)
+    token = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET)
   })
 
   test('entries are returned as json', async () => {
