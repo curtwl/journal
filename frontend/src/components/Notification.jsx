@@ -5,7 +5,7 @@ const Notification = () => {
   const { notificationMessage, clearNotification } = useContext(NotificationContext)
 
   useEffect(() => {
-    setTimeout(() => clearNotification, 3000)
+    setTimeout(() => clearNotification(), 3000)
   }, [])
 
     if (notificationMessage.message === '') {

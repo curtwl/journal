@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { LoginContext, NotificationContext } from "../components/ContextProvider"
 import signupService from '../services/signupService'
 import logoutService from '../services/logoutService'
-
+import Notification from "../components/Notification"
 export default function Account() {
     const loginContext = useContext(LoginContext)
     const { showSuccess, showError, clearNotification, notificationMessage } = useContext(NotificationContext)

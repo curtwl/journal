@@ -10,7 +10,7 @@ import loginService from '../services/loginService'
 
 export default function Home() {
     const [journalEntries, setJournalEntries] = useState([])
-    const { notificationMessage } = useContext(NotificationContext)
+    const { notificationMessage, clearNotification } = useContext(NotificationContext)
 
     const loginContext = useContext(LoginContext)
   
@@ -48,6 +48,7 @@ export default function Home() {
       )} else {       
           loadEntries()
       }
+      
     }, [])
 
     return (
