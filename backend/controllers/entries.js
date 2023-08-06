@@ -2,7 +2,6 @@ const entriesRouter = require('express').Router()
 const Entry = require('../models/entry')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-//const { getAccessToken } = require('./refresh')
 
 const requireToken = (request, response) => {
   const token = request.headers.authorization?.split(' ')[1]
@@ -26,21 +25,14 @@ const showPublicEntries = async (request, response) => {
 
 entriesRouter.get('/', async (request, response) => { 
     const token = request.headers.authorization?.split(' ')[1]
-    console.log(token, 'token from entries.js')
-    console.log(request.headers, 'headers from entries.js')
+
     if (token) {
       let decodedToken = null
        try {
         decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-        console.log(decodedToken, 'dectok')
        } catch (error) {
-        // TODO: refesh token
-        console.log(error, "catch jwt expired")
         response
           .status(401).json(({ error: 'Expired token' }))
-        //.cookie('userCookie', '', { expires: new Date(0) }, { httpOnly: true })
-        // .clearCookie('userCookie', { httpOnly: true })
-          //showPublicEntries(request, response)
        }
       if (decodedToken?.id) {
         const entries = await Entry.find({author: decodedToken.id})
@@ -53,7 +45,6 @@ entriesRouter.get('/', async (request, response) => {
 
 entriesRouter.get('/:id', async (request, response) => {
   const decodedToken = requireToken(request, response)
-
   const entry = await Entry.findById(request.params.id)
 
   if (entry.author.toString() === decodedToken.id) {
@@ -66,7 +57,6 @@ entriesRouter.get('/:id', async (request, response) => {
 entriesRouter.post('/', async (request, response) => {
   const body = request.body
   const token = request.headers.authorization?.split(' ')[1]
-  console.log(token)
   const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 
   if (!decodedToken.id) {
@@ -74,7 +64,6 @@ entriesRouter.post('/', async (request, response) => {
   }
 
   const user = await User.findById(decodedToken.id)
-  console.log(user)
 
   const entry = new Entry({
     title: body.title,
@@ -90,7 +79,8 @@ entriesRouter.post('/', async (request, response) => {
 
 entriesRouter.delete('/:id', async (request, response) => {
     const decodedToken = requireToken(request, response)
-console.log(decodedToken.id)
+
+    // check if decodedToken.id === id of entry's author?
     await Entry.findByIdAndRemove(request.params.id)
     response.status(204).end()
 })
@@ -104,8 +94,9 @@ entriesRouter.put('/:id', async (request, response) => {
     content: body.content,
   }
 
+  // should be before the if
   updatedEntry = await Entry.findByIdAndUpdate(request.params.id, entry, { new: true })
-  console.log(updatedEntry.author.toString() === decodedToken.id)
+  
   if (updatedEntry.author.toString() === decodedToken.id) {
     response.json(updatedEntry)
   } else {

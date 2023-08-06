@@ -24,10 +24,8 @@ export default function Home() {
         try {
           const token = await loginService.refreshTokenAndLogin()
           if (token) {
-            console.log(token, 'access token')
             entriesService.setToken(token[0])
             loginContext.setLoggedInUser( {username: token[1].username, id: token[1].id} )
-            console.log(loginContext.loggedInUser)
           } 
           } catch (error) {
             console.error(error)   
@@ -44,17 +42,12 @@ export default function Home() {
       }
       
       if (!loginContext.loggedInUser) {
-        console.log('not logged in')
         tryToRefreshToken().then(() => {
           loadEntries()
         }
-      )} else {
-        
+      )} else {       
           loadEntries()
       }
-        
-        console.log(loginContext.loggedInUser)
-        //loadEntries()
     }, [])
 
     return (

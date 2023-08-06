@@ -44,7 +44,6 @@ const loginWithPassword = async (request, response) => {
 
 loginRouter.post('/', async (request, response) => {
   const tokenFromCookie = request.cookies.userCookie
-  console.log(tokenFromCookie, 'login token')
   
   if (request.body.password)
     loginWithPassword(request, response)
@@ -52,12 +51,10 @@ loginRouter.post('/', async (request, response) => {
         const decodedToken = jwt.verify(tokenFromCookie, process.env.ACCESS_TOKEN_SECRET)
         const user = await User.findById(decodedToken.id) 
         if (user) {
-          console.log('valid')
           response
             .status(200)
             .send({ tokenFromCookie, username: decodedToken.username, id: decodedToken.id })
         } else {
-          console.log('clear cookie')
           response.clearCookie("token")
           response.status(401).json({ error: 'Invalid token' })
         }

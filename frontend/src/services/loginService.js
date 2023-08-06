@@ -11,9 +11,6 @@ const setToken = (newToken) => {
 const login = async (userObject=null) => {
     try {
       const response = await axios.post(baseURL, userObject)
-      console.log(response.data.accessToken)
-      // const decoded = jwt_decode(response.data.accessToken)
-      // console.log(decoded)
       return response.data
     } catch (error) {
       console.log(error)
@@ -29,20 +26,12 @@ const refreshTokenAndLogin = async () => {
     }
 
     const response = await axios.get('/api/refresh', config)
-    // get username and if from access token
+
+    // get username and id from access token
     const decodedTokenData = jwt_decode(response.data.accessToken)
-    console.log(response.data.accessToken)
     return [response.data.accessToken, decodedTokenData]
   } catch (error) {
     console.log(error)
-    // try {
-    //   const response = await axios.get('/api/refresh', config)
-    //   console.log(response, 'test')
-    //   return response.data
-    // } catch {
-    //   console.log('test')
-    //   console.log(error)
-    // }
   }
 }
 export default { login, refreshTokenAndLogin, setToken }

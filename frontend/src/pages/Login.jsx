@@ -27,7 +27,6 @@ export default function Login() {
               throw new Error('Username or password incorrect')
             entriesService.setToken(user.accessToken)
             loginService.setToken(user.accessToken)
-            console.log(user.accessToken)
             showSuccess('Logged in successfully!')
             loginContext.setLoggedInUser( {username: user.username, id: user.id} )
             navigate('/')
