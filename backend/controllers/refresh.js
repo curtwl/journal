@@ -5,7 +5,7 @@ refreshRouter.get('/', async (request, response) => {
     const tokenFromCookie = request.cookies?.userCookie
 
     if (!tokenFromCookie)
-    return response.status(401).json({ error: 'Unauthorized' })
+      return response.status(401).json({ error: 'Unauthorized' })
     
     const decodedToken = jwt.verify(tokenFromCookie, process.env.REFRESH_TOKEN_SECRET)
     
@@ -18,7 +18,7 @@ refreshRouter.get('/', async (request, response) => {
         id: decodedToken.id,
       }, 
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '8s' }
+      { expiresIn: '20m' }
     )
 
     response.json({ accessToken })

@@ -74,7 +74,7 @@ describe('when a user without a valid cookie GETs entries', () => {
           expect(response.body[i].title).toEqual(publicEntries[i].title)
           expect(response.body[i].content).toEqual(publicEntries[i].content)
           expect(response.body[i].author).toEqual(publicEntries[i].author.toString())
-          expect(response.body[i].public).toEqual(publicEntries[i].public)
+          expect(response.body[i].public).toEqual(true)
         }
       })
   })
