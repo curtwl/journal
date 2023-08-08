@@ -1,6 +1,6 @@
 import React from "react"
 import { useContext } from 'react'
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { LoginContext, EditModalContext } from "./ContextProvider"
 import logoutService from '../services/logoutService'
 
@@ -8,6 +8,7 @@ const Header = ({ editModal }) => {
   const loginContext = useContext(LoginContext)
   const editModalContext = useContext(EditModalContext)
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   
   const pathsForJSX = {
     '/': 'Create A Note',
@@ -16,9 +17,10 @@ const Header = ({ editModal }) => {
     '/account': 'Account'
   }
 
-  const logoutUser = () => {
+  const logoutUser = async () => {
+    await logoutService.logout()
     loginContext.setLoggedInUser(null)
-    logoutService.logout()
+    navigate('/')
   }
 
   return (

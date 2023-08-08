@@ -10,12 +10,13 @@ export default function Account() {
     const { showSuccess, showError, clearNotification, notificationMessage } = useContext(NotificationContext)
     const navigate = useNavigate()
 
-    const deleteAccountHandler = () => {
-        if (window.confirm('delete account?'))
+    // TODO: update to use access token
+    const deleteAccountHandler = async () => {
+      if (window.confirm('delete account?'))
         signupService.deleteAccount(loginContext.loggedInUser?.id)
         showSuccess("Sorry to see you go!")
         setTimeout(() => clearNotification(), 5000)
-        loginContext.setLoggedInUser(null)
+        await loginContext.setLoggedInUser(null)
         logoutService.logout()
         navigate('/')
     }
