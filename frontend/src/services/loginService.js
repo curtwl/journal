@@ -2,11 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 const baseURL = '/api/login'
 import jwt_decode from "jwt-decode"
-
-let token = null
-const setToken = (newToken) => {
-  token = `Bearer ${newToken}`
-}
+import { setToken } from '../utils/tokenHelper'
 
 const login = async (userObject=null) => {
     try {
@@ -25,10 +21,15 @@ const refreshTokenAndLogin = async () => {
       headers: { 'userCookie': userCookie }
     }
 
-    const response = await axios.get('/api/refresh', config)
+    let response
+    if (userCookie) {
+      response = await axios.get('/api/refresh', config)
+    } else
+      return
 
     // get username and id from access token
     const decodedTokenData = jwt_decode(response.data.accessToken)
+
     return [response.data.accessToken, decodedTokenData]
   } catch (error) {
     console.log(error)

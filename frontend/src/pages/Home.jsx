@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { useState, useEffect, useContext, createContext } from 'react'
 import entriesService from '../services/entriesService'
+import { setToken, isJWTExpired } from '../utils/tokenHelper'
 import Form from '../components/Form'
 import Posts from '../components/Posts'
 import Notification from "../components/Notification"
@@ -14,17 +15,13 @@ export default function Home() {
 
     const loginContext = useContext(LoginContext)
   
-    const checkJWTExpiry = (token) => {
-      const jwtPayload = JSON.parse(window.atob(JWT.split('.')[1]))
-      const isExpired = Date.now() >= jwtPayload.exp * 1000;
-    }
     // if user has a refresh cookie, try to log in with access token
     useEffect(() => {
       async function tryToRefreshToken() {
         try {
           const token = await loginService.refreshTokenAndLogin()
           if (token) {
-            entriesService.setToken(token[0])
+            setToken(token[0])
             loginContext.setLoggedInUser( {username: token[1].username, id: token[1].id} )
           } 
           } catch (error) {
@@ -48,7 +45,9 @@ export default function Home() {
       )} else {       
           loadEntries()
       }
-      
+      return () => {
+        clearNotification()
+      }
     }, [])
 
     return (

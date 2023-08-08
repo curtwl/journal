@@ -1,23 +1,10 @@
 import axios from 'axios'
-import loginService from './loginService'
 const baseURL = '/api/entries'
-
-let token = null
-const setToken = (newToken) => {
-  token = `Bearer ${newToken}`
-}
-
-const isJWTExpired = async (token) => {
-  token = token.split(' ')[1]
-  const jwtPayload = JSON.parse(window.atob(token?.split('.')[1]))
-  if (Date.now() >= jwtPayload.exp * 1000) {
-    const newToken = await loginService.refreshTokenAndLogin()
-    setToken(newToken[0])
-  }
-}
+import { token, setToken, isJWTExpired } from '../utils/tokenHelper'
 
 const getAllEntries = async () => {
-  await (isJWTExpired(token))
+  if (token)
+    await (isJWTExpired(token))
 
   try {
     const config = {
