@@ -2,7 +2,7 @@ import React from "react"
 import { useState, useContext } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
 import loginService from '../services/loginService'
-import entriesService from '../services/entriesService'
+import { setToken } from '../utils/tokenHelper'
 import { LoginContext, NotificationContext } from "../components/ContextProvider"
 import Notification from "../components/Notification"
 
@@ -25,14 +25,12 @@ export default function Login() {
             const user = await loginService.login(userObject)
             if (!user)
               throw new Error('Username or password incorrect')
-            entriesService.setToken(user.accessToken)
-            loginService.setToken(user.accessToken)
+            setToken(user.accessToken)
             showSuccess('Logged in successfully!')
             loginContext.setLoggedInUser( {username: user.username, id: user.id} )
             navigate('/')
           } catch (error) {
             showError('Username or password incorrect')
-            console.error(error)
           }
           setTimeout(() => clearNotification(), 3000)
     }

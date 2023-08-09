@@ -21,11 +21,11 @@ const refreshTokenAndLogin = async () => {
       headers: { 'userCookie': userCookie }
     }
 
-    let response
-    if (userCookie) {
-      response = await axios.get('/api/refresh', config)
-    } else
+    const response = await axios.get('/api/refresh', config)
+
+    if (response.status !== 200) {
       return
+    } 
 
     // get username and id from access token
     const decodedTokenData = jwt_decode(response.data.accessToken)
@@ -35,4 +35,4 @@ const refreshTokenAndLogin = async () => {
     console.log(error)
   }
 }
-export default { login, refreshTokenAndLogin, setToken }
+export default { login, refreshTokenAndLogin }

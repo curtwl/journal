@@ -2,26 +2,7 @@ const entriesRouter = require('express').Router()
 const Entry = require('../models/entry')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-
-const requireToken = (request, response) => {
-  const token = request.headers.authorization?.split(' ')[1]
-  let decodedToken = null
-
-  try {
-    return decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-  } catch (error) {
-    return response.status(403).json({ error: 'Invalid credentials' })
-  }
-}
-
-const showPublicEntries = async (request, response) => {
-  try {
-    const entries = await Entry.find({public: true})
-    response.json(entries)
-  } catch (error) {
-    response.status(500).json({ error: 'An error occurred while fetching public entries' })
-  }
-}
+const helper = require('../utils/helper')
 
 entriesRouter.get('/', async (request, response) => { 
     const token = request.headers.authorization?.split(' ')[1]
@@ -39,12 +20,12 @@ entriesRouter.get('/', async (request, response) => {
         response.json(entries)
       }
     } else {
-      showPublicEntries(request, response)
+      helper.showPublicEntries(request, response)
     }
 })
 
 entriesRouter.get('/:id', async (request, response) => {
-  const decodedToken = requireToken(request, response)
+  const decodedToken = helper.requireToken(request, response)
   const entry = await Entry.findById(request.params.id)
 
   if (entry.author.toString() === decodedToken.id) {
@@ -78,7 +59,7 @@ entriesRouter.post('/', async (request, response) => {
 })
 
 entriesRouter.delete('/:id', async (request, response) => {
-    const decodedToken = requireToken(request, response)
+    const decodedToken = helper.requireToken(request, response)
 
     // check if decodedToken.id === id of entry's author?
     await Entry.findByIdAndRemove(request.params.id)
@@ -86,7 +67,7 @@ entriesRouter.delete('/:id', async (request, response) => {
 })
 
 entriesRouter.put('/:id', async (request, response) => {
-  const decodedToken = requireToken(request, response)
+  const decodedToken = helper.requireToken(request, response)
   const body = request.body
 
   const entry = {

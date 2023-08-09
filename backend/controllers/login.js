@@ -39,7 +39,7 @@ const loginWithPassword = async (request, response) => {
   response
       .status(200)
       .cookie("userCookie", refreshToken, { httpOnly: true })
-      .send({ accessToken, username: user.username, })
+      .send({ accessToken, username: user.username, id: user.id})
 }
 
 loginRouter.post('/', async (request, response) => {

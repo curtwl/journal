@@ -1,8 +1,7 @@
 import React from "react"
-import { Link } from "react-router-dom"
-import { useState, useEffect, useContext, createContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import entriesService from '../services/entriesService'
-import { setToken, isJWTExpired } from '../utils/tokenHelper'
+import { setToken } from '../utils/tokenHelper'
 import Form from '../components/Form'
 import Posts from '../components/Posts'
 import Notification from "../components/Notification"
@@ -37,7 +36,7 @@ export default function Home() {
           console.log(error)
         }
       }
-      
+
       if (!loginContext.loggedInUser) {
         tryToRefreshToken().then(() => {
           loadEntries()

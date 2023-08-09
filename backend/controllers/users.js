@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const helper = require('../utils/helper')
 
 usersRouter.get('/', async (request, response) => {
   const users = await User.find({})
@@ -24,8 +25,7 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.delete('/:id', async (request, response, next) => {
-    const token = request.cookies.userCookie;
-    const decodedToken = jwt.verify(token, process.env.SECRET)
+  const decodedToken = helper.requireToken(request, response)
   
     if (!decodedToken.id) {
       return response.status(401).json({ error: 'Invalid token' })

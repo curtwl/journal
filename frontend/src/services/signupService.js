@@ -1,6 +1,6 @@
 import axios from 'axios'
 const baseURL = '/api/signup'
-import Cookies from 'js-cookie'
+import { token, setToken, isJWTExpired } from '../utils/tokenHelper'
 
 const signup = async (userObject) => {
   const response = await axios.post(baseURL, userObject)
@@ -8,11 +8,11 @@ const signup = async (userObject) => {
 }
 
 const deleteAccount = async (id) => {
-    const userCookie = Cookies.get('userCookie')
+  await (isJWTExpired(token))
 
-    const config = {
-        'userCookie': userCookie
-      }
+  const config = {
+    headers: { Authorization: token },
+  }
 
     const response = await axios.delete(`${baseURL}/${id}`, config)
     return response.data

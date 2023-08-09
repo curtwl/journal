@@ -12,13 +12,17 @@ export default function Account() {
 
     // TODO: update to use access token
     const deleteAccountHandler = async () => {
-      if (window.confirm('delete account?'))
-        signupService.deleteAccount(loginContext.loggedInUser?.id)
-        showSuccess("Sorry to see you go!")
-        setTimeout(() => clearNotification(), 5000)
-        await loginContext.setLoggedInUser(null)
-        logoutService.logout()
-        navigate('/')
+      if (window.confirm('delete account?')) 
+        try {
+          await signupService.deleteAccount(loginContext.loggedInUser?.id)
+          showSuccess("Sorry to see you go!")
+          setTimeout(() => clearNotification(), 5000)
+          loginContext.setLoggedInUser(null)
+          await logoutService.logout()
+          navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
     }
     
     return (
